@@ -1,0 +1,41 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+project/
+
+# Flask instance folder (contains config and sensitive files)
+instance/
+
+# Log files
+*.log
+
+# Environment variables
+*.env
+
+# macOS specific files
+.DS_Store
+
+# JetBrains IDE specific files
+.idea/
+
+# Visual Studio Code specific files
+.vscode/
+
+# Database files
+*.sqlite3
+*.db
+
+# Pytest cache
+.cache/
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
