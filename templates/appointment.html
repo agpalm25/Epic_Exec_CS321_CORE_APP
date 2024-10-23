@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body class="apptBody">
+
+    <div class="container">
+
+        <a href="/" class="back-link">back to home</a> <br>
+
+        <h1 class="apptTitle">Make an Appointment</h1> <br>
+
+        <div class="apptTransparentBackground">
+
+            <form action="/apptSubmit" method="post" class="apptForm">
+
+                <label for="fullName">Full Name</label> <br>
+                <input type="text" id="fullName" name="fullName" required> <br>
+
+                <label for="email">Email</label> <br>
+                <input type="text" id="email" name="email" required> <br>
+
+                <label for="apptDate">Date</label> <br>
+                <select id="apptDate" name="apptDate" required>
+                    <option value="">Select a Date</option>
+                </select> <br>
+
+                <label for="apptTime">Time</label> <br>
+                <select id="apptTime" name="spptTime" required>
+                    <option value="">Select a Time</option>
+                </select> <br>
+
+                <button type="apptSubmit" class="apptBtn">Submit</button> <br>
+            </form>
+
+            <div>
+                <p class="apptText" id="apptWait">Hit submit when you've selected a valid name, date, and time.</p>
+                <p class="apptText" id="apptThanks" style="display: none;">Thank you for your submission!</p>
+                <p class="apptText" id="apptClearWarning" style="display: none;">It seems like you haven't been cleared to
+                select an appointment time. If this isn't correct, please contact ex@colby.edu.</p>
+            </div>
+        </div>
+    </div>
+</body>
