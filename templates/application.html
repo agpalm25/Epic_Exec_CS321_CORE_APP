@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body class="apptBody">
+
+    <div class="container">
+
+        <a href="/" class="back-link">back to home</a> <br>
+
+
+        <!-- i dont know why its freaking out but without this it wont show the text properly. we can
+        fix our cs / formatting later, but for monday i need this here! -->
+        <h1>PAD MY TEXT PLEASE...</h1>
+
+        <h1 class="showMe">Thank You For Your Interest!</h1> <br>
+
+        <div class="">  
+                <p class="" id="">If you've met all of the requirements, please fill out the following form to apply.</p> 
+                <br>
+        </div>
+        
+        <form action="/applicSubmit" method="post" class="applicForm">
+
+            <!-- info form fields -->
+             <label for="name" class="delLabel">Name: </label>
+             <input type="text" id="name" name="name" required> <br>
+
+             <label for="email" class="delLabel">Email: </label>
+             <input type="text" id="email" name="email" required> <br>
+
+             <label for="classYear" class="delLabel">Class Year:</label>
+             <input type="number" id="classYear" name="classYear" min="1000" max="9999"> <br>
+
+             <label for="studID" class="delLabel">Student ID:</label>
+             <input type="number" id="studID" name="studID" min="10000" max="99999"> <br>
+
+            <!-- free text questions -->
+             <fieldset>
+    
+                <label for="fROne" class="delLabel">(free response question one: )</label>
+                <input type="text" id="fROne" name="fROne" required> <br>
+
+                <label for="fRTwo" class="delLabel">(free response question two: )</label>
+                <input type="text" id="fRTwo" name="fRTwo" required> <br>
+
+                <label for="fRThree" class="delLabel">(free response question three: )</label>
+                <input type="text" id="fRThree" name="fRThree" required> <br>
+
+                <label for="fRFour" class="delLabel">(free response question four: )</label>
+                <input type="text" id="fRFour" name="fRFour" required> <br>
+
+                <label for="fRFive" class="delLabel">(free response question five: )</label>
+                <input type="text" id="fRFive" name="fRFive" required> <br>
+
+                <label for="fRSix" class="delLabel">(free response question six: )</label>
+                <input type="text" id="fRSix" name="fRSix" required> <br>
+
+             </fieldset>
+
+            <button type="applicSubmit" class="">Submit</button> <br>
+        </form>
+    </div>
+</body>

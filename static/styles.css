@@ -45,8 +45,21 @@ select {
     border-radius: 5px;
 }
 
+
+/* DELETE THIS WHEN WE CARE ABOUT APPEARANCE - - - - - - - - - - - - - ! */
+.delLabel {
+    color: black;
+}
+
+.showMe {
+    color: black;
+    margin-bottom: 0px;
+}
+
+
+
 .container {
-    text-align: center;
+    text-align: top;
     margin-top: 20px;
 }
 
