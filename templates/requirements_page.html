@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_requirement_page.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Back to Home -->
+        <a href="{{ url_for('main.home') }}">back to home</a>
+        
+        <!-- Page Title -->
+        <h1>Requirements</h1>
+        
+        <!-- Explanation Section -->
+        <p>An explanation of the requirements / why they’re there.</p>
+        
+        <!-- Requirements Section -->
+        <div class="requirements">
+            <div class="requirement">
+                <input type="checkbox" id="requirement1">
+                <label for="requirement1">Requirement One</label>
+                <p>Description ...</p>
+            </div>
+            
+            <div class="requirement">
+                <input type="checkbox" id="requirement2">
+                <label for="requirement2">Requirement Two</label>
+                <p>Description ....</p>
+            </div>
+            
+            <div class="requirement completed">
+                <input type="checkbox" id="requirement3" checked>
+                <label for="requirement3">Requirement Three</label>
+                <p>Description ....</p>
+            </div>
+        </div>
+        
+        <!-- Message Box and Continue Button -->
+        <div class="message-box">
+            <p class="message">I'm sorry.. or Congratulations!</p>
+            <button class="continue-btn" disabled>Continue to application</button>
+        </div>
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script_requirement_page.js') }}"></script>
+</body>
+</html>
+

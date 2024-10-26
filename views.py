@@ -8,11 +8,13 @@ main_blueprint = Blueprint('main', __name__)
 def home():
     return render_template("home.html")
 
+@main_blueprint.route("/requirements")
+def requirements():
+    return render_template("requirements_page.html")
 
 @main_blueprint.route("/signin")
 def signin():
     return render_template("signin.html")
-
 
 @main_blueprint.route("/appointment")
 def appointment():

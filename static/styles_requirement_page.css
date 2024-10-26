@@ -1,0 +1,63 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f5f2;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #c76457;
+    font-size: 2rem;
+}
+
+.requirements {
+    margin-top: 20px;
+}
+
+.requirement {
+    background-color: #f4f2eb;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.requirement.completed {
+    background-color: #c76457;
+    color: white;
+}
+
+.requirement input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.message-box {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.continue-btn {
+    background-color: #c76457;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.continue-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}

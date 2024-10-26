@@ -6,6 +6,7 @@ __pycache__/
 venv/
 env/
 project/
+.venv/
 
 # Flask instance folder (contains config and sensitive files)
 instance/
