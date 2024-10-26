@@ -6,7 +6,7 @@ main_blueprint = Blueprint('main', __name__)
 
 @main_blueprint.route("/")
 def home():
-    return "Welcome"
+    return render_template("home.html")
 
 
 @main_blueprint.route("/signin")
@@ -17,3 +17,7 @@ def signin():
 @main_blueprint.route("/appointment")
 def appointment():
     return render_template("appointment.html")
+
+@main_blueprint.route("/ca-info")
+def ca_info():
+    return render_template("ca_info.html")
