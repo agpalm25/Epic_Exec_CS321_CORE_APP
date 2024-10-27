@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_assessment.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Assessment Form</h1>
+        <a href="{{ url_for('main.home') }}">back to home</a>
+    </div>
+    <div class="form-container">
+        <form>
+            <label for="question1">Question One:</label>
+            <input type="text" id="question1" placeholder="Response">
+
+            <label for="question2">Question Two:</label>
+            <input type="text" id="question2" placeholder="Response">
+
+            <label for="question3">Question Three:</label>
+            <input type="text" id="question3" placeholder="Response">
+
+            <label for="notes">Other Notes:</label>
+            <textarea id="notes" placeholder="Proctor Notes"></textarea>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <script src="script_assessment.js"></script>
+</body>
+</html>

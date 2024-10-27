@@ -32,3 +32,13 @@ def ca_info():
 @main_blueprint.route("/application")
 def application():
     return render_template("application.html")
+
+
+@main_blueprint.route("/UserHome")
+def user_home():
+    return render_template("UserHome.html")
+
+
+@main_blueprint.route("/assessment")
+def assessment():
+    return render_template("assessment.html")
