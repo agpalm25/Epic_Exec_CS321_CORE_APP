@@ -32,3 +32,7 @@ def ca_info():
 @main_blueprint.route("/application")
 def application():
     return render_template("application.html")
+
+@main_blueprint.route("/signup", methods=["GET", "POST"])
+def signup():
+    return render_template("signup.html")
