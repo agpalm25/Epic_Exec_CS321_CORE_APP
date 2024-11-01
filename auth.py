@@ -9,7 +9,6 @@ def signup():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        print(email, password)
                 
         existing_admin = Admin.query.filter_by(email=email).first()
         if existing_admin:

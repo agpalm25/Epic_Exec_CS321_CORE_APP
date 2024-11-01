@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_UserHome.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Back to Home -->
+        <a href="{{ url_for('main.home') }}">back to home</a>
+
+        <div class="welcome-message">
+            <h1>Hello, <span id="username">USERNAME</span>!</h1>
+        </div>
+        <div class="button-section">
+            <button class="btn">View All Applicants</button>
+            <!-- Add additional buttons here if needed -->
+        </div>
+        <div class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Application Status</th>
+                        <th>Interview Status / Time</th>
+                        <th>Application</th>
+                        <th>Assessment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table rows with data will go here -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Pending</td>
+                        <td>Scheduled - 10:00 AM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script_UserHome.js') }}"></script>
+</body>
+</html>
