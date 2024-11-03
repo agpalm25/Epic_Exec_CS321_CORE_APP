@@ -9,7 +9,7 @@ checkboxes.forEach(checkbox => {
             message.textContent = "Congratulations!";
         } else {
             continueBtn.disabled = true;
-            message.textContent = "I'm sorry..";
+            message.textContent = "You must meet all requirements..";
         }
     });
 });

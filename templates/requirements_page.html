@@ -15,33 +15,52 @@
         <h1>Requirements</h1>
         
         <!-- Explanation Section -->
-        <p>An explanation of the requirements / why they’re there.</p>
+        <p>The following are the requirements to become a Community Advisor (CA) at Colby College. These requirements help ensure that CAs are prepared to create a supportive, inclusive, and engaging residential environment for all students.</p>
         
         <!-- Requirements Section -->
         <div class="requirements">
             <div class="requirement">
                 <input type="checkbox" id="requirement1">
-                <label for="requirement1">Requirement One</label>
-                <p>Description ...</p>
+                <label for="requirement1">Full-Time Enrollment</label>
+                <p>Candidates must be enrolled as full-time students at Colby College for the 2024-2025 academic year and live on campus.</p>
             </div>
             
             <div class="requirement">
                 <input type="checkbox" id="requirement2">
-                <label for="requirement2">Requirement Two</label>
-                <p>Description ....</p>
+                <label for="requirement2">Minimum GPA of 2.5</label>
+                <p>Applicants must have a cumulative and semester GPA of at least 2.5 to qualify and maintain eligibility.</p>
+            </div>
+            
+            <div class="requirement">
+                <input type="checkbox" id="requirement3">
+                <label for="requirement3">Good Standing</label>
+                <p>Candidates must be in good student conduct standing, with no current involvement in any disciplinary or legal proceedings.</p>
+            </div>
+            
+            <div class="requirement">
+                <input type="checkbox" id="requirement4">
+                <label for="requirement4">Mandatory Training Attendance</label>
+                <p>Attendance at all training sessions is required, including Fall, JanPlan, and Spring sessions. This includes being present from the first day of training until the last scheduled day, with few exceptions.</p>
+            </div>
+            
+            <div class="requirement">
+                <input type="checkbox" id="requirement5">
+                <label for="requirement5">Commitment to Diversity and Inclusion</label>
+                <p>CAs must demonstrate a commitment to fostering an inclusive environment that respects diversity and promotes understanding among all residents.</p>
             </div>
             
             <div class="requirement completed">
-                <input type="checkbox" id="requirement3" checked>
-                <label for="requirement3">Requirement Three</label>
-                <p>Description ....</p>
+                <input type="checkbox" id="requirement6" checked>
+                <label for="requirement6">Leadership and Communication Skills</label>
+                <p>Candidates should possess or be willing to develop strong leadership, communication, and conflict-resolution skills to effectively support and guide their peers.</p>
             </div>
         </div>
         
         <!-- Message Box and Continue Button -->
         <div class="message-box">
-            <p class="message">I'm sorry.. or Congratulations!</p>
-            <button class="continue-btn" disabled>Continue to application</button>
+            <p class="message">Please complete all requirements to continue to the application.</p>
+            <button class="continue-btn" disabled onclick="window.location.href='{{ url_for('main.application') }}'">Continue to application</button>
+
         </div>
     </div>
 
@@ -49,4 +68,3 @@
     <script src="{{ url_for('static', filename='js/script_requirement_page.js') }}"></script>
 </body>
 </html>
-
