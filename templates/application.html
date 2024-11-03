@@ -55,10 +55,44 @@
                     <label for="student_id">Colby Student ID Number: </label>
                     <input type="number" id="student_id" name="student_id" min="100000" max="999999"> <br>
 
-                    <label for="cur_residence">Current Residence Hall Assignment: </label>
-                    <!-- do work on a dropdown here!  -->
-                    <input type="" id="" name="" required> <br>  
-
+                    <label for="cur_residence">Current Residence Hall Assignment: </label> <br>
+                    <select id="cur_residence" name="cur_residence" size="3" required>
+                        <option value="0">Alfond Main St. Commons</option>
+                        <option value="1">Alfond Senior Apartments</option>
+                        <option value="2">Anthony</option>
+                        <option value="3">Averill</option>
+                        <option value="4">Coburn</option>
+                        <option value="5">Dana</option>
+                        <option value="6">Drummond</option>
+                        <option value="7">East</option>
+                        <option value="8">Foss</option>
+                        <option value="9">Goddard-Hodgkins</option>
+                        <option value="10">Heights</option>
+                        <option value="11">Johnson</option>
+                        <option value="12">Johnson Pond House 1</option>
+                        <option value="13">Johnson Pond House 2</option>
+                        <option value="14">Johnson Pond House 3</option>
+                        <option value="15">Johnson Pond House 4</option>
+                        <option value="16">Leonard</option>
+                        <option value="17">Marriner</option>
+                        <option value="18">Mary Low</option>
+                        <option value="19">Mitchell</option>
+                        <option value="20">Perkins-Wilson</option>
+                        <option value="21">Pierce</option>
+                        <option value="22">Piper</option>
+                        <option value="23">Roberts</option>
+                        <option value="24">Schpuf</option>
+                        <option value="25">Sturtevant</option>
+                        <option value="26">Taylor</option>
+                        <option value="27">Treworgy</option>
+                        <option value="28">West</option>
+                        <option value="29">Williams</option>
+                        <option value="30">Woodman</option>
+                        <option value="31">36 Mt. Merci</option>
+                        <option value="32">Hill House</option>
+                        <option value="32">Away From Campus (Study Abroad)</option>
+                    </select> <br>
+                    
                     <label for="cur_room_num">Current Room Assignment (Room Number): </label>
                     <input type="number" id="cur_room_num" name="cur_room_num" min="000" max="999" required> <br>
 
@@ -72,8 +106,10 @@
 
                     <label for="cur_position">Community Advisor position interest for the XXXX-XXXX Academic Year: </label>
                     <p>Please select what best describes your interest/experience in the Community Advisory position.</p>
-                    <!-- do work on a multiple choice here! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="cur_position" name="cur_position">
+                        <option value="0">I am applying for a NEW Community Advisor Position</option>
+                        <option value="1">I am applying for a RETURNING Community Advisor Position</option>
+                    </select>
 
                 </fieldset>
 
@@ -94,17 +130,31 @@
                     <p>If applicable.</p>
                     <input type="text" id="minor_2" name="minor_2"> <br>
 
-                    <label for="next_year_standing">Class Standing for Next Year (2024-2025): </label>
-                    <!-- do work on a multiple choice here! -->
-                    <input type="" id="" name="" required> <br>
+                    <label for="next_year_standing">Class Standing for Next Year (2024-2025): </label> <br>
+                    <select id="next_year_standing" name="next_year_standing" required>
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="other">Other</option>
+                    </select> <br>
 
-                    <label for="anticipated_month_year_grad">Anticipated Month/Year of Graduation: </label>
-                    <!-- do work on a dropdown here! -->
-                    <input type="" id="" name="" required> <br>
+                    <label for="anticipated_month_year_grad">Anticipated Month/Year of Graduation: </label> <br>
+                    <select id="anticipated_month_year_grad" name="anticipated_month_year_grad" required>
+                        <option value="0">December 2024</option>
+                        <option value="1">May 2025</option>
+                        <option value="2">December 2025</option>
+                        <option value="3">May 2026</option>
+                        <option value="4">December 2026</option>
+                        <option value="5">May 2027</option>
+                        <option value="6">December 2027</option>
+                    </select> <br>
 
-                    <label for="study_abroad">Anticipated Study Abroad/Away Plans: </label>
-                    <!-- do work on a multiple choice here! -->
-                    <input type="" id="" name="" required> <br>
+                    <label for="study_abroad">Anticipated Study Abroad/Away Plans: </label> <br>
+                    <select id="study_abroad" name="study_abroad" required>
+                        <option value="0">No intention to study abroad/away for 2024-2025</option>
+                        <option value="1">Yes, intention to study abroad/away during Fall 2024</option>
+                        <option value="2">Yes, intention to study abroad/away during Spring 2025</option>
+                    </select> <br>
                     
                     <label for="gpa">Current Cumulative Grade Point Average: </label>
                     <input type="text" id="gpa" name="gpa" required> <br>
@@ -113,8 +163,20 @@
                     <input type="text" id="time_commitments" name="time_commitments"> <br>
 
                     <label for="prev_leadership">Previous Colby Student Leadership Experiences: </label>
-                    <!-- do work on a multiple choice here! -->
-                    <input type="" id="" name="" required> <br>
+                    <p>Have you previously held any of these Leadership roles? <br>
+                       Hold down the ctrl/cmd button to select multiple options if you need to.</p> <br>
+                    <select name="prev_leadership" id="prev_leadership" multiple required>
+                        <option value="0">COOT Committee</option>
+                        <option value="1">COOT Leader</option>
+                        <option value="2">Community Advisor</option>
+                        <option value="3">FLI Fellow</option>
+                        <option value="4">FLI Program Mentor (First Generation to College/Low Income Program)</option>
+                        <option value="5">International Student Buddy</option>
+                        <option value="6">International Student Fellow</option>
+                        <option value="7">Orientation Committee</option>
+                        <option value="8">Orientation Leader</option>
+                        <option value="9">None of the Above</option>
+                    </select>
 
                 </fieldset>
 
@@ -143,20 +205,35 @@
                     <label for="healthy_housing_interest">Healthy Colby Housing Interest: </label>
                     <p>Healthy Colby Wellness Housing offers students an environment that supports student wellness by providing programming and opportunities that are focused on the five domains of health and wellness (Intellectual Inquiry, Physical Wellness & Wellbeing, Emotional Wellness & well-being, Relationships, and Community Citizenship). Students will be provided with opportunities to explore resources, programs, and options that encourage overall wellness on and off campus. <br>
                         On a scale of 1-5, how interested are you in being a CA within Healthy Colby Wellness Housing (If the opportunity permits)? 1 being Not at all interested and 5 being extremely interested.</p>
-                    <!-- do work on a multiple choice ! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="healthy_housing_interest" name="healthy_housing_interest" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
 
                     <label for="substance_housing_interest"> Substance Free Housing Interest: </label>
                     <p>Substance-Free housing at Colby College is dedicated to providing a housing experience in which there is zero substance use of any kind within the vicinity of the residential community. Further defined, this includes that residents of the building will not consume alcohol, smoke or use tobacco products of any kind (including use of vape pens, etc.), or smoke or use any marijuana or any marijuana-related product of any kind while inside any space of the designated residential building. Additionally, Colby College is a smoke free campus, meaning that smoking of any kind is prohibited on Colby property [smoking pertains to all forms of smoking and is not limited to tobacco products]. <br>
                         On a scale of 1-5, how interested are you in being a CA within substance-free housing (if opportunity permits)?</p>
-                    <!-- do work on a multiple choice ! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="substance_housing_interest" name="substance_housing_interest" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
 
                     <label for="intercultural_housing_interest">Intercultural Living Learning Community (ILLC) Housing Interest: </label>
                     <p>The Intercultural Living Learning Community (ILLC): The ILLC will provide students an option to live in a purposefully diverse environment and engage in facilitated learning experiences to improve their ability to communicate across lines of difference, deepen their understanding of social identities, and develop the tools for cross-cultural collaboration. <br>
                         On a scale of 1-5, how interested are you in being a CA within the Intercultural Living Learning Community (ILLC) (if opportunity permits)?</p>
-                    <!-- do work on a multiple choice ! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="intercultural_housing_interest" name="intercultural_housing_interest" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
 
                     <h2>Staff Interest: </h2>
                     <p>Residence halls at Colby may have one or more Community Advisors living within the building. Some buildings only have one, while others may have upwards of 3. <br>
@@ -164,17 +241,31 @@
                         Buildings with one CA work independently but can have collaborations with other buildings for programming purposes. <br> 
                         On a scale of 1-5, please share your interests in each of the different building staffing opportunities.</p>
                     <label for="staff_interest_1">Working in a building with one or more other Community Advisors </label>
-                    <!-- do work on a multiple choice ! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="staff_interest_1" name="staff_interest_1" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
                     <label for="staff_interest_2">Working in a building as the only Community Advisor </label>
-                    <!-- do work on a multiple choice ! -->
-                    <input type="" id="" name="" required> <br>
+                    <select id="staff_interest_2" name="staff_interest_2" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
 
                     <label for="pop_interest">Population Interest: </label>
                     <p>Candidates, if selected, will have the opportunity to work exclusively with first-year students in select residence halls. This would allow for tailored programs, conversations, and connections to assist in the first-year transition. <br>
                         What best describes your interest?</p>
-                    <!-- do work on a multiple choice here ! -->
-                     <input type="" id="" name="" required> <br>
+                    <select id="pop_interest" name="pop_interest" required>
+                        <option value="0">Highly interested in working with first year populations of residents</option>
+                        <option value="1">Moderately interested in working with first year populations of residents</option>
+                        <option value="2">Some interest in working with first year populations of residents</option>
+                        <option value="3">Not interested in working with first year populations</option>
+                    </select>
 
                 </fieldset>
 
