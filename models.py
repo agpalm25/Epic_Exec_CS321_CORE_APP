@@ -20,3 +20,15 @@ class Admin(UserMixin, db.Model):
     
     def __repr__(self):
         return f'<Admin {self.email}>'
+
+class Appointment(db.Model):
+    __tablename__ = 'appointment'
+
+    id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    time = db.Column(db.Time, nullable=False)
+
+    def __repr__(self):
+        return f'<Appointment {self.full_name} on {self.date} at {self.time}>'

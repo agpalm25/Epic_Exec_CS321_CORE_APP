@@ -24,19 +24,15 @@
                 <input type="text" id="fullName" name="fullName" required> <br>
 
                 <label for="email">Email</label> <br>
-                <input type="text" id="email" name="email" required> <br>
+                <input type="email" id="email" name="email" required> <br>
 
                 <label for="apptDate">Date</label> <br>
-                <select id="apptDate" name="apptDate" required>
-                    <option value="">Select a Date</option>
-                </select> <br>
+                <input type="date" id="apptDate" name="apptDate" required> <br>
 
                 <label for="apptTime">Time</label> <br>
-                <select id="apptTime" name="spptTime" required>
-                    <option value="">Select a Time</option>
-                </select> <br>
+                <input type="time" id="apptTime" name="apptTime" min="09:00" max="17:00" required> <br>
 
-                <button type="apptSubmit" class="apptBtn">Submit</button> <br>
+                <button type="submit" class="apptBtn">Submit</button> <br>
             </form>
 
             <div>
@@ -48,3 +44,4 @@
         </div>
     </div>
 </body>
+</html>
