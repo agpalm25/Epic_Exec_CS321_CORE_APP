@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="form-container">
+            <h3>Admin Signup</h3>
+            <form method="POST" action="{{ url_for('auth.signup') }}">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" required
+                           title="Please use your Colby email address">
+                    <small>Please use your Colby email address (@colby.edu)</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p class="text-center">
+                Already have an account? <a href="/signin">Login here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
