@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_application.css') }}">
 </head>
 
 <body class="apptBody">
@@ -14,57 +14,281 @@
 
         <a href="/" class="back-link">back to home</a> <br>
 
+        <h1>Community Advisor Application</h1> <br>
+        <h2>2024-2025 Academic Year</h2><br>
 
-        <!-- i dont know why its freaking out but without this it wont show the text properly. we can
-        fix our cs / formatting later, but for monday i need this here! -->
-        <h1>PAD MY TEXT PLEASE...</h1>
+        <div id="mid_year_page_1">
 
-        <h1 class="showMe">Thank You For Your Interest!</h1> <br>
+            <h3>Mid Year Hire Process:</h3> <br>
 
-        <div class="">  
-                <p class="" id="">If you've met all of the requirements, please fill out the following form to apply.</p> 
-                <br>
+            <p>Application Deadline: <br>
+               Interview Dates: <br>
+               Decisions: <br>
+            </p>
+
+            <h3>Position Descriptions: </h3> <br>
+
+            <a href="{{ url_for('main.ca_info') }}">Community Advisory Position Description</a> <br>
+
+            <p>For assistance in completing this Application, or for any questions, please contact Kyle Arthenayake (Associate Director of Residential Education) at karthena@colby.edu or Shikha Shrestha (Assistant Director of Residential Education) at shshrest@colby.edu.</p>
+
         </div>
-        
-        <form action="/applicSubmit" method="post" class="applicForm">
 
-            <!-- info form fields -->
-             <label for="name" class="delLabel">Name: </label>
-             <input type="text" id="name" name="name" required> <br>
+        <div id="applicant_information_page_2">
 
-             <label for="email" class="delLabel">Email: </label>
-             <input type="text" id="email" name="email" required> <br>
+            <form action="{{ url_for('apply.submit_application')}}" method="post" class="applicForm"> 
 
-             <label for="classYear" class="delLabel">Class Year:</label>
-             <input type="number" id="classYear" name="classYear" min="1000" max="9999"> <br>
+                <fieldset id="page_2">
+                    <label for="last_name">LAST Name: </label>
+                    <input type="text" id="last_name" name="last_name" > <br>
 
-             <label for="studID" class="delLabel">Student ID:</label>
-             <input type="number" id="studID" name="studID" min="10000" max="99999"> <br>
+                    <label for="first_name">FIRST Name: </label>
+                    <input type="text" id="first_name" name="first_name" > <br>
 
-            <!-- free text questions -->
-             <fieldset>
-    
-                <label for="fROne" class="delLabel">(free response question one: )</label>
-                <input type="text" id="fROne" name="fROne" required> <br>
+                    <label for="preferred_name">PREFERRED Name: </label>
+                    <p>Please share if you have or go by a preferred name.</p>
+                    <input type="text" id="preferred_name" name="preferred_name" > <br>
 
-                <label for="fRTwo" class="delLabel">(free response question two: )</label>
-                <input type="text" id="fRTwo" name="fRTwo" required> <br>
+                    <label for="pronouns">Pronouns: </label>
+                    <input type="text" id="pronouns" name="pronouns" > <br>
 
-                <label for="fRThree" class="delLabel">(free response question three: )</label>
-                <input type="text" id="fRThree" name="fRThree" required> <br>
+                    <label for="student_id">Colby Student ID Number: </label>
+                    <input type="number" id="student_id" name="student_id" min="100000" max="999999"> <br>
 
-                <label for="fRFour" class="delLabel">(free response question four: )</label>
-                <input type="text" id="fRFour" name="fRFour" required> <br>
+                    <label for="cur_residence">Current Residence Hall Assignment: </label> <br>
+                    <select id="cur_residence" name="cur_residence" size="3" >
+                        <option value="0">Alfond Main St. Commons</option>
+                        <option value="1">Alfond Senior Apartments</option>
+                        <option value="2">Anthony</option>
+                        <option value="3">Averill</option>
+                        <option value="4">Coburn</option>
+                        <option value="5">Dana</option>
+                        <option value="6">Drummond</option>
+                        <option value="7">East</option>
+                        <option value="8">Foss</option>
+                        <option value="9">Goddard-Hodgkins</option>
+                        <option value="10">Heights</option>
+                        <option value="11">Johnson</option>
+                        <option value="12">Johnson Pond House 1</option>
+                        <option value="13">Johnson Pond House 2</option>
+                        <option value="14">Johnson Pond House 3</option>
+                        <option value="15">Johnson Pond House 4</option>
+                        <option value="16">Leonard</option>
+                        <option value="17">Marriner</option>
+                        <option value="18">Mary Low</option>
+                        <option value="19">Mitchell</option>
+                        <option value="20">Perkins-Wilson</option>
+                        <option value="21">Pierce</option>
+                        <option value="22">Piper</option>
+                        <option value="23">Roberts</option>
+                        <option value="24">Schpuf</option>
+                        <option value="25">Sturtevant</option>
+                        <option value="26">Taylor</option>
+                        <option value="27">Treworgy</option>
+                        <option value="28">West</option>
+                        <option value="29">Williams</option>
+                        <option value="30">Woodman</option>
+                        <option value="31">36 Mt. Merci</option>
+                        <option value="32">Hill House</option>
+                        <option value="32">Away From Campus (Study Abroad)</option>
+                    </select> <br>
+                    
+                    <label for="cur_room_num">Current Room Assignment (Room Number): </label>
+                    <input type="number" id="cur_room_num" name="cur_room_num" min="000" max="999" > <br>
 
-                <label for="fRFive" class="delLabel">(free response question five: )</label>
-                <input type="text" id="fRFive" name="fRFive" required> <br>
+                    <label for="email">Colby College Email Address: </label>
+                    <p>Please ensure that it is accurate as all communication to candidates is only through the Colby College email address provided here.</p>
+                    <input type="text" id="email" name="email" > <br>
 
-                <label for="fRSix" class="delLabel">(free response question six: )</label>
-                <input type="text" id="fRSix" name="fRSix" required> <br>
+                    <label for="phone_number">Cell Phone Number:</label>
+                    <p> Please ONLY use the following format: XXX-XXX-XXXX</p>
+                    <input type="text" id="phone_number" name="phone_number" > <br>
 
-             </fieldset>
+                    <label for="cur_position">Community Advisor position interest for the XXXX-XXXX Academic Year: </label>
+                    <p>Please select what best describes your interest/experience in the Community Advisory position.</p>
+                    <select id="cur_position" name="cur_position">
+                        <option value="0">I am applying for a NEW Community Advisor Position</option>
+                        <option value="1">I am applying for a RETURNING Community Advisor Position</option>
+                    </select>
 
-            <button type="applicSubmit" class="">Submit</button> <br>
-        </form>
+                </fieldset>
+
+                <fieldset id="page_3">
+
+                    <label for="major_1">Academic Major (1): </label>
+                    <input type="text" id="major_1" name="major_1" > <br>
+
+                    <label for="major_2">Academic Major (2): </label>
+                    <p>If applicable.</p>
+                    <input type="text" id="major_2" name="major_2"> <br>
+
+                    <label for="minor_1">Academic Minor (1): </label>
+                    <p>If applicable.</p>
+                    <input type="text" id="minor_1" name="minor_1"> <br>
+
+                    <label for="minor_2">Academic Minor (2): </label>
+                    <p>If applicable.</p>
+                    <input type="text" id="minor_2" name="minor_2"> <br>
+
+                    <label for="next_year_standing">Class Standing for Next Year (2024-2025): </label> <br>
+                    <select id="next_year_standing" name="next_year_standing" >
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="other">Other</option>
+                    </select> <br>
+
+                    <label for="anticipated_month_year_grad">Anticipated Month/Year of Graduation: </label> <br>
+                    <select id="anticipated_month_year_grad" name="anticipated_month_year_grad" >
+                        <option value="0">December 2024</option>
+                        <option value="1">May 2025</option>
+                        <option value="2">December 2025</option>
+                        <option value="3">May 2026</option>
+                        <option value="4">December 2026</option>
+                        <option value="5">May 2027</option>
+                        <option value="6">December 2027</option>
+                    </select> <br>
+
+                    <label for="study_abroad">Anticipated Study Abroad/Away Plans: </label> <br>
+                    <select id="study_abroad" name="study_abroad" >
+                        <option value="0">No intention to study abroad/away for 2024-2025</option>
+                        <option value="1">Yes, intention to study abroad/away during Fall 2024</option>
+                        <option value="2">Yes, intention to study abroad/away during Spring 2025</option>
+                    </select> <br>
+                    
+                    <label for="gpa">Current Cumulative Grade Point Average: </label>
+                    <input type="text" id="gpa" name="gpa" > <br>
+
+                    <label for="time_commitments">Anticipated time commitments outside of academics and the CA role: </label>
+                    <input type="text" id="time_commitments" name="time_commitments"> <br>
+
+                    <label for="prev_leadership">Previous Colby Student Leadership Experiences: </label>
+                    <p>Have you previously held any of these Leadership roles? <br>
+                       Hold down the ctrl/cmd button to select multiple options if you need to.</p> <br>
+                    <select name="prev_leadership" id="prev_leadership" multiple >
+                        <option value="0">COOT Committee</option>
+                        <option value="1">COOT Leader</option>
+                        <option value="2">Community Advisor</option>
+                        <option value="3">FLI Fellow</option>
+                        <option value="4">FLI Program Mentor (First Generation to College/Low Income Program)</option>
+                        <option value="5">International Student Buddy</option>
+                        <option value="6">International Student Fellow</option>
+                        <option value="7">Orientation Committee</option>
+                        <option value="8">Orientation Leader</option>
+                        <option value="9">None of the Above</option>
+                    </select>
+
+                </fieldset>
+
+                <fieldset id="page_4">
+
+                    <label for="text_response_1">What kind of student leader do you envision yourself to be in the residential community? Please draw on your experiences as a student living within the residential community.  (2000 letters max)</label>
+                    <input type="text" id="text_response_1" name="text_response_1" maxlength="2000"> <br>
+
+                </fieldset>
+
+                <fieldset id="page_5">
+
+                    <label for="resume">RESUME:</label>
+                    <p>
+                        A current and updated resume must accompany your application in order to complete your application materials. Please upload your resume below. <br>
+                        Candidates are encouraged to contact DavisConnects in preparation of the resume portion of the application process. DavisConnects is located Grossman Hall. This office can be reached at 207-859-4140 or at DavisConnects@colby.edu.</p>
+                    <!-- try to input a file later...? -->
+                    <input type="text" id="resume" name="resume"> <br>
+
+                    <label for="add_info">ADDITIONAL INFORMATION (OPTIONAL): </label>
+                    <input type="text" id="add_info" name="add_info"> <br>
+
+
+                    <h2>Specialty Housing Interest: </h2>
+
+                    <label for="healthy_housing_interest">Healthy Colby Housing Interest: </label>
+                    <p>Healthy Colby Wellness Housing offers students an environment that supports student wellness by providing programming and opportunities that are focused on the five domains of health and wellness (Intellectual Inquiry, Physical Wellness & Wellbeing, Emotional Wellness & well-being, Relationships, and Community Citizenship). Students will be provided with opportunities to explore resources, programs, and options that encourage overall wellness on and off campus. <br>
+                        On a scale of 1-5, how interested are you in being a CA within Healthy Colby Wellness Housing (If the opportunity permits)? 1 being Not at all interested and 5 being extremely interested.</p>
+                    <select id="healthy_housing_interest" name="healthy_housing_interest" >
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+
+                    <label for="substance_housing_interest"> Substance Free Housing Interest: </label>
+                    <p>Substance-Free housing at Colby College is dedicated to providing a housing experience in which there is zero substance use of any kind within the vicinity of the residential community. Further defined, this includes that residents of the building will not consume alcohol, smoke or use tobacco products of any kind (including use of vape pens, etc.), or smoke or use any marijuana or any marijuana-related product of any kind while inside any space of the designated residential building. Additionally, Colby College is a smoke free campus, meaning that smoking of any kind is prohibited on Colby property [smoking pertains to all forms of smoking and is not limited to tobacco products]. <br>
+                        On a scale of 1-5, how interested are you in being a CA within substance-free housing (if opportunity permits)?</p>
+                    <select id="substance_housing_interest" name="substance_housing_interest" >
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+
+                    <label for="intercultural_housing_interest">Intercultural Living Learning Community (ILLC) Housing Interest: </label>
+                    <p>The Intercultural Living Learning Community (ILLC): The ILLC will provide students an option to live in a purposefully diverse environment and engage in facilitated learning experiences to improve their ability to communicate across lines of difference, deepen their understanding of social identities, and develop the tools for cross-cultural collaboration. <br>
+                        On a scale of 1-5, how interested are you in being a CA within the Intercultural Living Learning Community (ILLC) (if opportunity permits)?</p>
+                    <select id="intercultural_housing_interest" name="intercultural_housing_interest" >
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+
+                    <h2>Staff Interest: </h2>
+                    <p>Residence halls at Colby may have one or more Community Advisors living within the building. Some buildings only have one, while others may have upwards of 3. <br>
+                        Those working with co-CAs typically work collaboratively with one another within the building to meet the resident's need. <br>
+                        Buildings with one CA work independently but can have collaborations with other buildings for programming purposes. <br> 
+                        On a scale of 1-5, please share your interests in each of the different building staffing opportunities.</p>
+                    <label for="staff_interest_1">Working in a building with one or more other Community Advisors </label>
+                    <select id="staff_interest_1" name="staff_interest_1" >
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+                    <label for="staff_interest_2">Working in a building as the only Community Advisor </label>
+                    <select id="staff_interest_2" name="staff_interest_2" >
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+
+                    <label for="pop_interest">Population Interest: </label>
+                    <p>Candidates, if selected, will have the opportunity to work exclusively with first-year students in select residence halls. This would allow for tailored programs, conversations, and connections to assist in the first-year transition. <br>
+                        What best describes your interest?</p>
+                    <select id="pop_interest" name="pop_interest" >
+                        <option value="0">Highly interested in working with first year populations of residents</option>
+                        <option value="1">Moderately interested in working with first year populations of residents</option>
+                        <option value="2">Some interest in working with first year populations of residents</option>
+                        <option value="3">Not interested in working with first year populations</option>
+                    </select>
+
+                </fieldset>
+
+                <fieldset id="page_6">
+
+                    <p>I am aware of the Hall Staff position requirements that I am applying for. <br>
+                        By signing my name : <br> 
+                        1: I signify that the information I have submitted in this intent application contains no intentional misinterpretations, omissions, or falsifications, and is true and accurate to the best of my knowledge. <br>
+                        2: I  understand that incomplete or false information may subject me to removal from consideration for a Hall Staff position. <br>
+                        3: I authorize Colby's Office of the Residential Experience to conduct an academic (including verification of grade point average) and student conduct record check during and after the processing of my application to provide information necessary to determine my ability to be employed. <br>
+                    </p>
+
+                    <p>Please sign your name as electronic recognition and acceptance of the above statements regarding your application materials.</p>
+
+                    <label for="signature"></label>
+                    <input type="text" id="signature" name="signature" > <br>
+
+                    <input type="submit" value="submit">
+
+                </fieldset>
+
+
+
+        </div>
     </div>
 </body>
