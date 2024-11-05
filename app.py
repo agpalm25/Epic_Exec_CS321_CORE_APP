@@ -1,5 +1,5 @@
 from flask import Flask
-from models import db, Admin
+from models import db, Admin, ApplicantInformation
 from views import main_blueprint
 from auth import auth_blueprint
 from flask_login import LoginManager
@@ -21,8 +21,9 @@ def load_user(id):
 app.register_blueprint(main_blueprint)
 app.register_blueprint(auth_blueprint)
 
+with app.app_context():
+    db.create_all() 
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Create tables (if not created)
     app.run(debug=True)
 

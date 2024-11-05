@@ -36,7 +36,7 @@
 
         <div id="applicant_information_page_2">
 
-            <form action="/applicSubmit" method="post" class="applicForm"> 
+            <form action="{{ url_for('main.application') }}" method="POST" class="applicForm"> 
 
                 <fieldset id="page_2">
                     <label for="last_name">LAST Name: </label>
