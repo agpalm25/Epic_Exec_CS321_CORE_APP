@@ -32,3 +32,30 @@ class Appointment(db.Model):
 
     def __repr__(self):
         return f'<Appointment {self.full_name} on {self.date} at {self.time}>'
+    
+
+class ApplicantInformation(db.Model):
+    __tablename__ = 'applicant_information'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    last_name = db.Column(db.String, nullable=False)
+    first_name = db.Column(db.String, nullable=False)
+    preferred_name = db.Column(db.String, nullable=True)
+    pronouns = db.Column(db.String, nullable=False)
+    student_id = db.Column(db.String, unique=True, nullable=False)
+    current_hall = db.Column(db.String, nullable=False)
+    current_room_number = db.Column(db.String, nullable=False)
+    current_email = db.Column(db.String, nullable=False)
+    current_phone_number = db.Column(db.String, nullable=False)
+    returning_ca_or_new_ca = db.Column(db.String, nullable=False)
+    major_1 = db.Column(db.String, nullable=False)
+    major_2 = db.Column(db.String, nullable=True)
+    minor_1 = db.Column(db.String, nullable=True)
+    minor_2 = db.Column(db.String, nullable=True)
+    class_year = db.Column(db.String, nullable=False)
+    cumulative_gpa = db.Column(db.Float, nullable=False)
+    leadership_experience = db.Column(db.PickleType, nullable=False)
+
+    # Relationship
+    preferences = db.relationship('ApplicantPreferences', backref='applicant', uselist=False)
+   
