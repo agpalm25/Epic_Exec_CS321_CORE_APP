@@ -58,4 +58,26 @@ class ApplicantInformation(db.Model):
 
     # Relationship
     preferences = db.relationship('ApplicantPreferences', backref='applicant', uselist=False)
-   
+    additional_info = db.relationship('AdditionalInformation', backref='applicant', uselist=False)
+
+
+class ApplicantPreferences(db.Model):
+    __tablename__ = 'applicant_preferences'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    substance_free_housing_interest = db.Column(db.Integer, nullable=False)
+    healthy_colby_interest = db.Column(db.String, nullable=False)
+    population_interest = db.Column(db.String, nullable=False)
+    staff_interest = db.Column(db.PickleType, nullable=False) 
+    illc_interest = db.Column(db.String, nullable=False)
+    student_id = db.Column(db.String, db.ForeignKey('applicant_information.student_id'), nullable=False)
+
+
+class AdditionalInformation(db.Model):
+    __tablename__ = 'additional_information'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    why_ca = db.Column(db.String, nullable=False)
+    additional_comments = db.Column(db.String, nullable=True)
+    #resume = db.Column(db.LargeBinary, nullable=False)  # Or use File storage handling
+    student_id = db.Column(db.String, db.ForeignKey('applicant_information.student_id'), nullable=False)
