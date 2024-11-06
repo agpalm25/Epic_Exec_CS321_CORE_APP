@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app as app
-from models import db, Appointment, ApplicantInformation, ApplicantPreferences
+from models import db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
@@ -24,16 +24,10 @@ def appointment():
 def ca_info():
     return render_template("ca_info.html")
 
-#@main_blueprint.route("/application")
-#def application():
-#    return render_template("application.html")
-
 @main_blueprint.route('/application', methods=['GET', 'POST'])
 def application():
     if request.method == 'POST':
-        # Retrieve data from the form fields
         try:
-            # Applicant Information
             applicant_info = ApplicantInformation(
                 last_name=request.form['last_name'],
                 first_name=request.form['first_name'],
@@ -54,8 +48,28 @@ def application():
                 leadership_experience=request.form.getlist('prev_leadership')
             )
 
-           
+            applicant_preferences = ApplicantPreferences(
+                student_id=request.form['student_id'],
+                substance_free_housing_interest=int(request.form['substance_housing_interest']),
+                healthy_colby_interest=int(request.form['healthy_housing_interest']),
+                population_interest=request.form['pop_interest'],
+                staff_interest={
+                    "Alone": int(request.form['staff_interest_2']),
+                    "With a Partner": int(request.form['staff_interest_1'])
+                },
+                illc_interest=int(request.form['intercultural_housing_interest'])
+            )
+
+            additional_info = AdditionalInformation(
+                student_id=request.form['student_id'],
+                why_ca=request.form['text_response_1'],
+                additional_comments=request.form.get('add_info')
+            )
+
+
             db.session.add(applicant_info)
+            db.session.add(applicant_preferences)
+            db.session.add(additional_info)
             db.session.commit()
 
             flash('Application submitted successfully!', 'success')
