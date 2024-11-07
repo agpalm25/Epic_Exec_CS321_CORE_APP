@@ -3,10 +3,14 @@ from models import db, Appointment, ApplicantInformation, ApplicantPreferences, 
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
+import logging
+from email_sender import send_application_confirmation_email, send_interview_confirmation_email
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 @main_blueprint.route("/")
 def home():
@@ -66,18 +70,24 @@ def application():
                 additional_comments=request.form.get('add_info')
             )
 
-
             db.session.add(applicant_info)
             db.session.add(applicant_preferences)
             db.session.add(additional_info)
             db.session.commit()
 
-            flash('Application submitted successfully!', 'success')
+            try:
+                send_application_confirmation_email(request.form['email'])
+                flash('Application submitted successfully! A confirmation email has been sent.', 'success')
+            except Exception as e:
+                logger.error(f"Failed to send application confirmation email: {str(e)}")
+                flash('Application submitted successfully! However, there was an issue sending the confirmation email.', 'warning')
+
             return redirect(url_for('main.ca_info'))
 
         except Exception as e:
             db.session.rollback()
-            flash(f'Error submitting application: {e}', 'danger')
+            logger.error(f"Error submitting application: {str(e)}")
+            flash(f'Error submitting application. Please try again later.', 'danger')
             return redirect(url_for('main.application'))
     
     return render_template('application.html')
@@ -90,3 +100,42 @@ def user_home():
 def assessment():
     return render_template("assessment.html")
 
+@main_blueprint.route("/apptSubmit", methods=['POST'])
+def appt_submit():
+    if request.method == 'POST':
+        full_name = request.form.get('fullName')
+        email = request.form.get('email')
+        date_str = request.form.get('apptDate')
+        time_str = request.form.get('apptTime')
+
+        try:
+            date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            time = datetime.strptime(time_str, '%H:%M').time()
+
+            new_appointment = Appointment(
+                full_name=full_name,
+                email=email,
+                date=date,
+                time=time
+            )
+            db.session.add(new_appointment)
+            db.session.commit()
+
+            try:
+                send_interview_confirmation_email(email, full_name, date_str, time_str)
+                flash('Appointment scheduled successfully! A confirmation email has been sent.', 'success')
+            except Exception as e:
+                logger.error(f"Failed to send interview confirmation email: {str(e)}")
+                flash('Appointment scheduled successfully! However, there was an issue sending the confirmation email.', 'warning')
+
+            return redirect(url_for('main.appointment'))
+        except ValueError:
+            flash('Invalid date or time format. Please try again.', 'error')
+            return redirect(url_for('main.appointment'))
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error scheduling appointment: {str(e)}")
+            flash(f'Error scheduling appointment. Please try again later.', 'danger')
+            return redirect(url_for('main.appointment'))
+
+    return redirect(url_for('main.appointment'))
