@@ -92,9 +92,21 @@ def application():
     
     return render_template('application.html')
 
-@main_blueprint.route("/UserHome")
-def user_home():
-    return render_template("UserHome.html")
+@main_blueprint.route("/admin_homepage")
+def admin_home():
+    applicants = ApplicantInformation.query.limit(10).all()
+    applicants_data = [
+        {
+            "first_name": applicant.first_name,
+            "last_name": applicant.last_name,
+            "application_status":  "N/A",
+            "interview_status": "N/A",
+            "application_link": "N/A",
+            "assessment_status": "N/A"
+        }
+        for applicant in applicants
+    ]
+    return render_template("admin_homepage.html", applicants=applicants_data)
 
 @main_blueprint.route("/assessment")
 def assessment():
@@ -139,3 +151,9 @@ def appt_submit():
             return redirect(url_for('main.appointment'))
 
     return redirect(url_for('main.appointment'))
+
+@main_blueprint.route('/applicants')
+def view_applicants():
+    # Query the database for all applicants
+    applicants = ApplicantInformation.query.all()
+    return render_template('admin_homepage.html', applicants=applicants)
