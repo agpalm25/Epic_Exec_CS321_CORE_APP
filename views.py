@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 import logging
 from email_sender import send_application_confirmation_email, send_interview_confirmation_email
+from flask_login import login_required
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -92,9 +93,10 @@ def application():
     
     return render_template('application.html')
 
+@login_required
 @main_blueprint.route("/admin_homepage")
 def admin_home():
-    applicants = ApplicantInformation.query.limit(10).all()
+    applicants = ApplicantInformation.query.limit(20).all()
     applicants_data = [
         {
             "first_name": applicant.first_name,
@@ -152,8 +154,19 @@ def appt_submit():
 
     return redirect(url_for('main.appointment'))
 
+
 @main_blueprint.route('/applicants')
-def view_applicants():
-    # Query the database for all applicants
+def view_all_applicants():
     applicants = ApplicantInformation.query.all()
-    return render_template('admin_homepage.html', applicants=applicants)
+    applicants_data = [
+        {
+            "first_name": applicant.first_name,
+            "last_name": applicant.last_name,
+            "application_status":  "N/A",
+            "interview_status": "N/A",
+            "application_link": "N/A",
+            "assessment_status": "N/A"
+        }
+        for applicant in applicants
+    ]
+    return render_template('admin_homepage.html', applicants=applicants_data)
