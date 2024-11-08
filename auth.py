@@ -9,7 +9,7 @@ def signup():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-                
+                        
         existing_admin = Admin.query.filter_by(email=email).first()
         if existing_admin:
             return redirect(url_for('auth.signin'))
@@ -33,7 +33,7 @@ def signin():
         admin = Admin.query.filter_by(email=email).first()
         if admin and admin.check_password(password):
             login_user(admin)
-            return redirect(url_for('main.ca_info'))
+            return redirect(url_for('main.admin_home'))
     
     return render_template("signin.html")
 

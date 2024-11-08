@@ -31,17 +31,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Table rows with data will go here -->
-                    <tr>
-                        <td>John Doe</td>
-                        <td>Pending</td>
-                        <td>Scheduled - 10:00 AM</td>
-                    </tr>
+                    {% for applicant in applicants %}
+                        <tr>
+                            <td>{{ applicant.first_name }} {{ applicant.last_name }}</td>
+                            <td>{{ applicant.application_status or 'N/A' }}</td>
+                            <td>{{ applicant.interview_status or 'N/A' }}</td>
+                            <td>{{ applicant.application_link or 'N/A' }}</td>
+                            <td>{{ applicant.assessment_status or 'N/A' }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No applicants found.</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/script_UserHome.js') }}">
+            const applicants = {{ applicants | tojson }};
 
-    <script src="{{ url_for('static', filename='js/script_UserHome.js') }}"></script>
+    </script>
 </body>
 </html>
