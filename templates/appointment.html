@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment</title>
+    <title>Schedule Interview Appointment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
@@ -14,17 +14,11 @@
 
         <a href="/" class="back-link">back to home</a> <br>
 
-        <h1 class="apptTitle">Make an Appointment</h1> <br>
+        <h1 class="apptTitle">Schedule Interview Appointment</h1> <br>
 
         <div class="apptTransparentBackground">
 
             <form action="/apptSubmit" method="post" class="apptForm">
-
-                <label for="fullName">Full Name</label> <br>
-                <input type="text" id="fullName" name="fullName" required> <br>
-
-                <label for="email">Email</label> <br>
-                <input type="email" id="email" name="email" required> <br>
 
                 <label for="student_id">Student ID</label> <br>
                 <input type="text" id="student_id" name="student_id" required> <br>
@@ -35,16 +29,24 @@
                 <label for="apptTime">Time</label> <br>
                 <input type="time" id="apptTime" name="apptTime" min="09:00" max="17:00" required> <br>
 
-                <button type="submit" class="apptBtn">Submit</button> <br>
+                <button type="submit" class="apptBtn">Schedule Interview</button> <br>
             </form>
 
             <div>
-                <p class="apptText" id="apptWait">Hit submit when you've selected a valid name, date, and time.</p>
-                <p class="apptText" id="apptThanks" style="display: none;">Thank you for your submission!</p>
-                <p class="apptText" id="apptClearWarning" style="display: none;">It seems like you haven't been cleared to
-                select an appointment time. If this isn't correct, please contact ex@colby.edu.</p>
+                <p class="apptText" id="apptWait">Please enter your Student ID and select a valid date and time for your interview.</p>
+                <p class="apptText" id="apptThanks" style="display: none;">Thank you for scheduling your interview!</p>
+                <p class="apptText" id="apptClearWarning" style="display: none;">It seems like you haven't submitted an application yet. Please submit your application before scheduling an interview. If you believe this is an error, please contact ex@colby.edu.</p>
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelector('.apptForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('apptWait').style.display = 'none';
+            document.getElementById('apptThanks').style.display = 'block';
+            this.submit();
+        });
+    </script>
 </body>
 </html>
