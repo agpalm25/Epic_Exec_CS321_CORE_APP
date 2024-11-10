@@ -4,39 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colby CA Application Website</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .nav-link {
-            padding: 10px 20px;
-            background-color: #76C3C3;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+
+        .navbar{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0.5; }
+
+        .navbar-nav .nav-link {
+            margin: 0 15px;
+            color: black;
+            font-weight: 500; }
+        
+        .navbar-nav .nav-link:hover {
+            color:#333; }
+
+        .carousel, .carousel-item, .carousel-item img {
+            height: 100vh;
+            object-fit: cover;
+            opacity: 0.95; }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-        }
-        .nav-link:hover {
-            background-color: #5A9999;
-        }
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            z-index: 2; }
+
+        .carousel-inner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1; }
+
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Welcome to CA Appointment System</h1>
-        <div class="nav-links">
-            <a href="/signin" class="nav-link">Sign In</a>
-            <a href="/appointment" class="nav-link">Make an Appointment</a>
-            <a href="/ca-info" class="nav-link">What is a CA?</a>
-            <a href="/requirements" class="nav-link">Requirement</a>
-            <a href="/admin_homepage" class="nav-link">Admin Hompage</a>
-            <a href="/assessment" class="nav-link">Assessment</a>
-            <a href="/application" class="nav-link">Application</a>
+
+    <nav class="navbar navbar-expand bg-light">
+
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="ca-info">Who is a CA?</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="requirements">Requirements</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="application">Application</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="appointment">Make an Appointment</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="signin">Admin Sign-In</a></li>
+
+        </ul>
+    </nav>
+
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
+        
+        <div class="carousel-caption">
+
+            <h1 class="display-1"><strong>Apply to become a CA!</strong></h1>
+            <blockquote class="blockquote"><p>Would you like to help create community on campus? Would you like to make connections with other students and get paid for it? Apply for a CA position!</p></blockquote>
+
+        </div>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='images/mariner.jpg') }}" class="d-block w-100" alt="Mariner Residence">
+            </div>
+
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/averill.jpg') }}" class="d-block w-100" alt="Averill Residence">
+            </div>
+
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/drummond.jpg') }}" class="d-block w-100" alt="Drummond Residence">
+            </div>
+
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/west_quad.jpg') }}" class="d-block w-100" alt="West-Quad Residence">
+            </div>
+
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
