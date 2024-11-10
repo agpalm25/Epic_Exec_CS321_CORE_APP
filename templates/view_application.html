@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Application Details</h1>
+        <a href="{{ url_for('main.admin_home') }}">Back to Admin Dashboard</a>
+        
+        <h2>Personal Information</h2>
+        <p>Name: {{ applicant.first_name }} {{ applicant.last_name }}</p>
+        <p>Preferred Name: {{ applicant.preferred_name or 'N/A' }}</p>
+        <p>Pronouns: {{ applicant.pronouns }}</p>
+        <p>Student ID: {{ applicant.student_id }}</p>
+        <p>Current Hall: {{ applicant.current_hall }}</p>
+        <p>Current Room Number: {{ applicant.current_room_number }}</p>
+        <p>Email: {{ applicant.current_email }}</p>
+        <p>Phone Number: {{ applicant.current_phone_number }}</p>
+        
+        <h2>Academic Information</h2>
+        <p>Major 1: {{ applicant.major_1 }}</p>
+        <p>Major 2: {{ applicant.major_2 or 'N/A' }}</p>
+        <p>Minor 1: {{ applicant.minor_1 or 'N/A' }}</p>
+        <p>Minor 2: {{ applicant.minor_2 or 'N/A' }}</p>
+        <p>Class Year: {{ applicant.class_year }}</p>
+        <p>Cumulative GPA: {{ applicant.cumulative_gpa }}</p>
+        
+        <h2>CA Experience</h2>
+        <p>Returning CA or New CA: {{ applicant.returning_ca_or_new_ca }}</p>
+        <p>Leadership Experience: {{ ', '.join(applicant.leadership_experience) }}</p>
+        
+        <h2>Preferences</h2>
+        <p>Substance-Free Housing Interest: {{ preferences.substance_free_housing_interest }}</p>
+        <p>Healthy Colby Interest: {{ preferences.healthy_colby_interest }}</p>
+        <p>Population Interest: {{ preferences.population_interest }}</p>
+        <p>Staff Interest: {{ preferences.staff_interest }}</p>
+        <p>ILLC Interest: {{ preferences.illc_interest }}</p>
+        
+        <h2>Additional Information</h2>
+        <p>Why CA: {{ additional_info.why_ca }}</p>
+        <p>Additional Comments: {{ additional_info.additional_comments or 'N/A' }}</p>
+        
+        <h2>Application Status</h2>
+        <p>Status: {{ applicant.application_status }}</p>
+        <p>Interview Status: {{ applicant.get_interview_status() }}</p>
+        <p>Assessment Status: {{ applicant.assessment_status }}</p>
+        
+        <a href="{{ url_for('main.assessment', student_id=applicant.student_id) }}">Assess Applicant</a>
+    </div>
+</body>
+</html>

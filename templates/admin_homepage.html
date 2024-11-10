@@ -13,33 +13,42 @@
         <a href="{{ url_for('main.home') }}">back to home</a>
 
         <div class="welcome-message">
-            <h1>Hello, <span id="username">USERNAME</span>!</h1>
+            <h1>Hello, <span id="username">Admin</span>!</h1>
         </div>
         <div class="button-section">
-        <a href="{{url_for('main.view_all_applicants')}}" class="btn">
-            <button class="btn">View All Applicants</button>
-        </a>
+            <a href="{{url_for('main.view_all_applicants')}}" class="btn">
+                <button class="btn">View All Applicants</button>
+            </a>
             <!-- Add additional buttons here if needed -->
         </div>
+        
+        <!-- Search Form -->
+        <div class="search-section">
+            <form action="{{ url_for('main.admin_home') }}" method="GET">
+                <input type="text" name="search" placeholder="Search by name" value="{{ search_query }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
         <div class="table-section">
             <table>
                 <thead>
                     <tr>
                         <th>Student Name</th>
                         <th>Application Status</th>
-                        <th>Interview Status / Time</th>
+                        <th>Interview Status</th>
                         <th>Application</th>
-                        <th>Assessment</th>
+                        <th>Offer Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for applicant in applicants %}
                         <tr>
                             <td>{{ applicant.first_name }} {{ applicant.last_name }}</td>
-                            <td>{{ applicant.application_status or 'N/A' }}</td>
-                            <td>{{ applicant.interview_status or 'N/A' }}</td>
-                            <td>{{ applicant.application_link or 'N/A' }}</td>
-                            <td>{{ applicant.assessment_status or 'N/A' }}</td>
+                            <td>{{ applicant.application_status }}</td>
+                            <td>{{ applicant.interview_status }}</td>
+                            <td><a href="{{ url_for('main.view_application', student_id=applicant.student_id) }}">View Application</a></td>
+                            <td><a href="{{ url_for('main.assess_applicant', student_id=applicant.student_id) }}">{{ applicant.assessment_status }}</a></td>
                         </tr>
                     {% else %}
                         <tr>

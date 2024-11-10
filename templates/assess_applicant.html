@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assess Applicant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Assess Applicant</h1>
+        <a href="{{ url_for('main.view_application', student_id=applicant.student_id) }}">Back to Application</a>
+        
+        <h2>{{ applicant.first_name }} {{ applicant.last_name }}</h2>
+        <p>Student ID: {{ applicant.student_id }}</p>
+        <p>Current Assessment Status: {{ applicant.assessment_status }}</p>
+        
+        <form action="{{ url_for('main.assess_applicant', student_id=applicant.student_id) }}" method="POST">
+            <label for="assessment">Overall Assessment:</label>
+            <select name="assessment" id="assessment" required>
+                <option value="">Select an assessment</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Waitlisted">Waitlisted</option>
+                <option value="Needs Further Review">Needs Further Review</option>
+            </select>
+            
+            <button type="submit">Submit Assessment</button>
+        </form>
+    </div>
+</body>
+</html>

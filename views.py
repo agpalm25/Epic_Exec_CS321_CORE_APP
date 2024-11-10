@@ -6,6 +6,7 @@ import os
 import logging
 from email_sender import send_application_confirmation_email, send_interview_confirmation_email
 from flask_login import login_required
+from sqlalchemy import or_
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -50,7 +51,8 @@ def application():
                 minor_2=request.form.get('minor_2'),
                 class_year=request.form['next_year_standing'],
                 cumulative_gpa=float(request.form['gpa']),
-                leadership_experience=request.form.getlist('prev_leadership')
+                leadership_experience=request.form.getlist('prev_leadership'),
+                application_status='Submitted'
             )
 
             applicant_preferences = ApplicantPreferences(
@@ -96,39 +98,58 @@ def application():
 @login_required
 @main_blueprint.route("/admin_homepage")
 def admin_home():
-    applicants = ApplicantInformation.query.limit(20).all()
-    applicants_data = [
-        {
-            "first_name": applicant.first_name,
-            "last_name": applicant.last_name,
-            "application_status":  "N/A",
-            "interview_status": "N/A",
-            "application_link": "N/A",
-            "assessment_status": "N/A"
-        }
-        for applicant in applicants
-    ]
-    return render_template("admin_homepage.html", applicants=applicants_data)
+    search_query = request.args.get('search', '')
+    
+    if search_query:
+        applicants = ApplicantInformation.query.filter(
+            or_(
+                ApplicantInformation.first_name.ilike(f'%{search_query}%'),
+                ApplicantInformation.last_name.ilike(f'%{search_query}%')
+            )
+        ).all()
+    else:
+        applicants = ApplicantInformation.query.all()
+    
+    applicants_data = []
+    for applicant in applicants:
+        appointment = Appointment.query.filter_by(student_id=applicant.student_id).first()
+        interview_status = "Yet To Schedule"
+        if appointment:
+            interview_status = f"Scheduled for {appointment.date} at {appointment.time}"
+        applicants_data.append({
+            'first_name': applicant.first_name,
+            'last_name': applicant.last_name,
+            'student_id': applicant.student_id,
+            'application_status': applicant.application_status,
+            'interview_status': interview_status,
+            'assessment_status': applicant.assessment_status
+        })
+    return render_template("admin_homepage.html", applicants=applicants_data, search_query=search_query)
 
-@main_blueprint.route("/assessment")
-def assessment():
-    return render_template("assessment.html")
+@main_blueprint.route("/assessment/<string:student_id>")
+def assessment(student_id):
+    applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
+    return render_template("assessment.html", applicant=applicant)
 
 @main_blueprint.route("/apptSubmit", methods=['POST'])
 def appt_submit():
     if request.method == 'POST':
-        full_name = request.form.get('fullName')
-        email = request.form.get('email')
+        student_id = request.form.get('student_id')
         date_str = request.form.get('apptDate')
         time_str = request.form.get('apptTime')
+
+        applicant = ApplicantInformation.query.filter_by(student_id=student_id).first()
+
+        if not applicant:
+            flash('No application found for this student ID. Please submit an application first.', 'error')
+            return redirect(url_for('main.appointment'))
 
         try:
             date = datetime.strptime(date_str, '%Y-%m-%d').date()
             time = datetime.strptime(time_str, '%H:%M').time()
 
             new_appointment = Appointment(
-                full_name=full_name,
-                email=email,
+                student_id=student_id,
                 date=date,
                 time=time
             )
@@ -136,7 +157,7 @@ def appt_submit():
             db.session.commit()
 
             try:
-                send_interview_confirmation_email(email, full_name, date_str, time_str)
+                send_interview_confirmation_email(applicant.current_email, f"{applicant.first_name} {applicant.last_name}", date_str, time_str)
                 flash('Appointment scheduled successfully! A confirmation email has been sent.', 'success')
             except Exception as e:
                 logger.error(f"Failed to send interview confirmation email: {str(e)}")
@@ -154,19 +175,43 @@ def appt_submit():
 
     return redirect(url_for('main.appointment'))
 
-
 @main_blueprint.route('/applicants')
 def view_all_applicants():
     applicants = ApplicantInformation.query.all()
-    applicants_data = [
-        {
-            "first_name": applicant.first_name,
-            "last_name": applicant.last_name,
-            "application_status":  "N/A",
-            "interview_status": "N/A",
-            "application_link": "N/A",
-            "assessment_status": "N/A"
-        }
-        for applicant in applicants
-    ]
+    applicants_data = []
+    for applicant in applicants:
+        appointment = Appointment.query.filter_by(student_id=applicant.student_id).first()
+        interview_status = "Yet To Schedule"
+        if appointment:
+            interview_status = f"Scheduled for {appointment.date} at {appointment.time}"
+        applicants_data.append({
+            'first_name': applicant.first_name,
+            'last_name': applicant.last_name,
+            'student_id': applicant.student_id,
+            'application_status': applicant.application_status,
+            'interview_status': interview_status,
+            'assessment_status': applicant.assessment_status
+        })
     return render_template('admin_homepage.html', applicants=applicants_data)
+
+@login_required
+@main_blueprint.route('/view_application/<string:student_id>')
+def view_application(student_id):
+    applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
+    preferences = ApplicantPreferences.query.filter_by(student_id=student_id).first()
+    additional_info = AdditionalInformation.query.filter_by(student_id=student_id).first()
+    return render_template('view_application.html', applicant=applicant, preferences=preferences, additional_info=additional_info)
+
+@login_required
+@main_blueprint.route('/assess_applicant/<string:student_id>', methods=['GET', 'POST'])
+def assess_applicant(student_id):
+    applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
+    
+    if request.method == 'POST':
+        assessment = request.form.get('assessment')
+        applicant.assessment_status = assessment
+        db.session.commit()
+        flash('Assessment updated successfully', 'success')
+        return redirect(url_for('main.admin_home'))
+    
+    return render_template('assess_applicant.html', applicant=applicant)
