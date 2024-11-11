@@ -4,52 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Application</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            background: url('{{ url_for("static", filename="images/diamond.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff; /* White text to contrast against the background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .home-icon a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .home-icon a:hover {
+            color: #ddd;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        a {
+            color: #17a2b8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 1.1em;
+        }
+
+        .back-link {
+            margin-bottom: 20px;
+        }
+
+        .section-heading {
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section-content {
+            margin-bottom: 10px;
+        }
+
+        .bottom-link {
+            text-align: right;
+            margin-top: 50px;
+            padding: 10px 10px;
+            color: rgba(100, 138, 68);
+            border-radius: 5px;
+        }
+
+        .bottom-link a {
+            color: rgb(47, 46, 36);
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 10;
+            position: relative; 
+        }
+
+        .bottom-link a:hover {
+            color: rgb(47, 46, 36);
+        }
+
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Application Details</h1>
-        <a href="{{ url_for('main.admin_home') }}">Back to Admin Dashboard</a>
-        
-        <h2>Personal Information</h2>
-        <p>Name: {{ applicant.first_name }} {{ applicant.last_name }}</p>
-        <p>Preferred Name: {{ applicant.preferred_name or 'N/A' }}</p>
-        <p>Pronouns: {{ applicant.pronouns }}</p>
-        <p>Student ID: {{ applicant.student_id }}</p>
-        <p>Current Hall: {{ applicant.current_hall }}</p>
-        <p>Current Room Number: {{ applicant.current_room_number }}</p>
-        <p>Email: {{ applicant.current_email }}</p>
-        <p>Phone Number: {{ applicant.current_phone_number }}</p>
-        
-        <h2>Academic Information</h2>
-        <p>Major 1: {{ applicant.major_1 }}</p>
-        <p>Major 2: {{ applicant.major_2 or 'N/A' }}</p>
-        <p>Minor 1: {{ applicant.minor_1 or 'N/A' }}</p>
-        <p>Minor 2: {{ applicant.minor_2 or 'N/A' }}</p>
-        <p>Class Year: {{ applicant.class_year }}</p>
-        <p>Cumulative GPA: {{ applicant.cumulative_gpa }}</p>
-        
-        <h2>CA Experience</h2>
-        <p>Returning CA or New CA: {{ applicant.returning_ca_or_new_ca }}</p>
-        <p>Leadership Experience: {{ ', '.join(applicant.leadership_experience) }}</p>
-        
-        <h2>Preferences</h2>
-        <p>Substance-Free Housing Interest: {{ preferences.substance_free_housing_interest }}</p>
-        <p>Healthy Colby Interest: {{ preferences.healthy_colby_interest }}</p>
-        <p>Population Interest: {{ preferences.population_interest }}</p>
-        <p>Staff Interest: {{ preferences.staff_interest }}</p>
-        <p>ILLC Interest: {{ preferences.illc_interest }}</p>
-        
-        <h2>Additional Information</h2>
-        <p>Why CA: {{ additional_info.why_ca }}</p>
-        <p>Additional Comments: {{ additional_info.additional_comments or 'N/A' }}</p>
-        
-        <h2>Application Status</h2>
-        <p>Status: {{ applicant.application_status }}</p>
-        <p>Interview Status: {{ applicant.get_interview_status() }}</p>
-        <p>Assessment Status: {{ applicant.assessment_status }}</p>
-        
-        <a href="{{ url_for('main.assessment', student_id=applicant.student_id) }}">Assess Applicant</a>
+
+    <div class="home-icon">
+
+        <a href="/" title="Go to Homepage">
+        <i class="fas fa-home"></i>
+        </a>
+    
     </div>
+
+    <div class="home-icon">
+        <a href="{{ url_for('main.admin_home') }}" title="Go to My New Page">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+
+    <h1 class="display-1">Application Details</h1>
+
+    <div class="container">
+
+        <div class="section-heading">
+            <h2>Personal Information</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Name:</strong> {{ applicant.first_name }} {{ applicant.last_name }}</p>
+            <p><strong>Preferred Name:</strong> {{ applicant.preferred_name or 'N/A' }}</p>
+            <p><strong>Pronouns:</strong> {{ applicant.pronouns }}</p>
+            <p><strong>Student ID:</strong> {{ applicant.student_id }}</p>
+            <p><strong>Current Hall:</strong> {{ applicant.current_hall }}</p>
+            <p><strong>Current Room Number:</strong> {{ applicant.current_room_number }}</p>
+            <p><strong>Email:</strong> {{ applicant.current_email }}</p>
+            <p><strong>Phone Number:</strong> {{ applicant.current_phone_number }}</p>
+        </div>
+
+        <div class="section-heading">
+            <h2>Academic Information</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Major 1:</strong> {{ applicant.major_1 }}</p>
+            <p><strong>Major 2:</strong> {{ applicant.major_2 or 'N/A' }}</p>
+            <p><strong>Minor 1:</strong> {{ applicant.minor_1 or 'N/A' }}</p>
+            <p><strong>Minor 2:</strong> {{ applicant.minor_2 or 'N/A' }}</p>
+            <p><strong>Class Year:</strong> {{ applicant.class_year }}</p>
+            <p><strong>Cumulative GPA:</strong> {{ applicant.cumulative_gpa }}</p>
+        </div>
+
+        <div class="section-heading">
+            <h2>CA Experience</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Returning CA or New CA:</strong> {{ applicant.returning_ca_or_new_ca }}</p>
+            <p><strong>Leadership Experience:</strong> {{ ', '.join(applicant.leadership_experience) }}</p>
+        </div>
+
+        <div class="section-heading">
+            <h2>Preferences</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Substance-Free Housing Interest:</strong> {{ preferences.substance_free_housing_interest }}</p>
+            <p><strong>Healthy Colby Interest:</strong> {{ preferences.healthy_colby_interest }}</p>
+            <p><strong>Population Interest:</strong> {{ preferences.population_interest }}</p>
+            <p><strong>Staff Interest:</strong> {{ preferences.staff_interest }}</p>
+            <p><strong>ILLC Interest:</strong> {{ preferences.illc_interest }}</p>
+        </div>
+
+        <div class="section-heading">
+            <h2>Additional Information</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Why CA:</strong> {{ additional_info.why_ca }}</p>
+            <p><strong>Additional Comments:</strong> {{ additional_info.additional_comments or 'N/A' }}</p>
+        </div>
+
+        <div class="section-heading">
+            <h2>Application Status</h2>
+        </div>
+        <div class="section-content">
+            <p><strong>Status:</strong> {{ applicant.application_status }}</p>
+            <p><strong>Interview Status:</strong> {{ applicant.get_interview_status() }}</p>
+            <p><strong>Assessment Status:</strong> {{ applicant.assessment_status }}</p>
+        </div>
+
+        <div class="section-heading text-center">
+            <a href="{{ url_for('main.assessment', student_id=applicant.student_id) }}" class="btn btn-info btn-lg btn-block">
+                Assess Applicant
+            </a>
+        </div>
+    </div>
+
+    <div class="bottom-link">
+        <a href="https://commons.wikimedia.org/wiki/File:Colby_College_Diamond_Building_Entrance.JPG">Photo Credit</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
