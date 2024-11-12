@@ -2,24 +2,164 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
     <title>Schedule Interview Appointment</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for("static", filename="images/roberts.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6); 
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 10px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .home-icon a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .home-icon a:hover {
+            color: #ddd;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.04); 
+            z-index: 1;
+        }
+
+        .container {
+            z-index: 1;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8); 
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px; 
+        }
+
+        .apptTitle {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .apptForm label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .apptForm input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .apptBtn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .apptText {
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .bottom-link {
+            position: fixed;
+            bottom: 5px;
+            right: 5px;
+            padding: 10px 10px;
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+            z-index: 10;
+        }
+
+        .bottom-link a {
+            color: rgb(255, 251, 205);
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .bottom-link a:hover {
+            color: rgb(51, 83, 25);
+        }
+
+    </style>
 </head>
 
-<body class="apptBody">
+<body>
+    <div class="overlay"></div>
 
-    <div class="container">
+        <div class="home-icon">
 
-        <a href="/" class="back-link">back to home</a> <br>
+            <a href="/" title="Go to Homepage">
+            <i class="fas fa-home"></i>
+            </a>
+    
+        </div>
 
-        <h1 class="apptTitle">Schedule Interview Appointment</h1> <br>
+        <h1 class="display-1">Schedule an Interview Appointment</h1>
+
+        <div class="container">
 
         <div class="apptTransparentBackground">
-
             <form action="/apptSubmit" method="post" class="apptForm">
-
                 <label for="student_id">Student ID</label> <br>
                 <input type="text" id="student_id" name="student_id" required> <br>
 
@@ -38,6 +178,11 @@
                 <p class="apptText" id="apptClearWarning" style="display: none;">It seems like you haven't submitted an application yet. Please submit your application before scheduling an interview. If you believe this is an error, please contact ex@colby.edu.</p>
             </div>
         </div>
+
+    </div>
+
+    <div class="bottom-link">
+        <a href="https://commons.wikimedia.org/wiki/File:Colby_College_Roberts_Hall.JPG">Photo Credit</a>
     </div>
 
     <script>
@@ -49,4 +194,5 @@
         });
     </script>
 </body>
+
 </html>
