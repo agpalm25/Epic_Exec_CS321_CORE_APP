@@ -1,105 +1,295 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <html>
+
   <head>
-    <title>Who is a CA?</title>
+
+    <title>What does a CA do?</title>
+
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='ca_info.css') }}"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-  </head>
-  <body>
-    <div class="container">
-      <div class="back-link">
-        <a href="/">back to home</a>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            color: #b65045;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .home-icon a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .home-icon a:hover {
+            color: #ddd;
+        }
+      
+
+        .bg-image {
+            background-image: url('{{ url_for("static", filename="images/miller_pop.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100%; 
+            width: 100%;
+        }
+
+        .overlay {
+            background-color: #ffe4e1d5; 
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .title-box {
+            text-align: center;
+            background-color: transparent;  
+            padding: 0;  
+            border-radius: 0;
+            color: white;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .content-box {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .text-section {
+            flex: 1;
+            padding: 20px;
+            color: #b65045;
+        }
+
+        .text-section h2, .text-section p {
+            text-align: left;
+        }
+
+        h2, h3 {
+            font-weight: 300;  
+            color: #b65045; 
+            padding-bottom: 10px;
+            border-bottom: 1px solid #b09592e5; 
+            margin-bottom: 20px; 
+        }
+
+        .text-section, .image-section {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .image-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .image-section img {
+          max-width: 100%;
+          border-radius: 8px; 
+          margin: 0;
+        }
+
+        .full-width-text {
+            text-align: left;
+            padding: 20px 0;  
+            flex-basis: 100%;
+        }
+
+        blockquote {
+            border-left: 5px solid #bc6c63;
+            padding-left: 20px;          
+            padding-right: 20px;
+            padding-top: 10px; 
+            padding-bottom: 10px;
+            margin: 20px 0;
+            background-color: #fceeee; 
+            border-radius: 10px;
+            font-style: italic;        
+            color: #555;                    
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            line-height: 1.5;  
+        }
+
+        blockquote p {
+            margin: 0; 
+        }
+
+        .cta-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #bc6c63;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .cta-link:hover {
+            background-color: #b14d42; 
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-image">
+
+        <div class="home-icon">
+            <a href="/" title="Go to Homepage">
+            <i class="fas fa-home"></i>
+            </a>
+        </div>
+
+      <div class="container">
+
+            <div class="title-box">
+            <h1 class="display-1"><strong>What does a CA do?</strong></h1>
+            </div>
+
+        <div class="overlay mt-5">
+
+            <div class="full-width-text">
+
+                <h2>Role of a Community Advisor</h2>
+
+                <p>
+                        The Community Advisor (CA) position at Colby College is a vital
+                        leadership role dedicated to creating a safe, inclusive, and
+                        supportive living environment in residence halls. CAs play an
+                        essential part in fostering community, building connections, and
+                        supporting the academic and personal growth of students.
+                </p><br>
+
+                <h3>Responsibilities</h3>
+                <ul>
+                  <li>
+                    <strong>Community Development:</strong> Establish and maintain an
+                    inclusive environment where all residents feel welcomed,
+                    respected, and supported. Plan and execute programming, organize
+                    hall meetings, and help residents connect with each other.
+                  </li>
+                  <li>
+                    <strong>Conflict Resolution:</strong> Mediate conflicts and
+                    facilitate roommate agreements proactively, helping to resolve any
+                    concerns in a constructive manner.
+                  </li>
+                  <li>
+                    <strong>Resource Referral:</strong> Serve as a knowledgeable
+                    support system for students, referring them to on-campus resources
+                    such as counseling, academic support, and health services.
+                  </li>
+                  <li>
+                    <strong>Duty & Emergency Response:</strong> Participate in a
+                    nightly duty rotation, conduct regular safety checks, and assist
+                    during emergencies, ensuring a safe environment for all residents.
+                  </li>
+                  <li>
+                    <strong>Student Accountability:</strong> Uphold community
+                    standards and address inappropriate behaviors consistently. Work
+                    with professional staff to maintain a respectful, accountable
+                    community.
+                  </li>
+                </ul> <br>
+
+            
+                <h3>Training and Development</h3>
+
+                <p>
+                        CAs undergo extensive training in leadership, community building,
+                        and emergency response. Training sessions occur at the beginning of
+                        each semester and prior to JanPlan. Attendance is mandatory to
+                        ensure all CAs are well-prepared to support their communities
+                        effectively.
+                </p><br>
+            </div>
+
+            <div class="image-section">
+
+              <img
+                src="{{ url_for('static', filename='images/ca_img.png') }}"
+                alt="CA work at Colby College"
+                description="CA work at Colby College"
+              />
+
+            </div>
+
+            <h3>Testimonials from CAs</h3>
+
+            <div class="content-box">
+
+                <blockquote>
+                    "Being a CA has allowed me to make a difference in my peers' lives
+                    and build a community that feels like home. It's been a
+                    transformative experience!" – Alex, Senior CA
+                </blockquote> <br>
+
+                <blockquote>
+                    "The CA position has helped me grow as a leader, learn about
+                    conflict resolution, and make connections with residents from all
+                    backgrounds." – Taylor, Junior CA
+                </blockquote> <br>
+            </div>
+
+            <h3>Perks and Compensation</h3>
+
+            <div class="content-box">
+                <p>
+                    CAs receive an annual stipend of $5,000 and are assigned a
+                    designated single bedroom. This role offers invaluable skills in
+                    leadership, communication, and problem-solving, which are highly
+                    sought after by future employers.
+                </p>
+
+        </div>
+
+          </div>
+
+          <div class="cta-box">
+
+            <a href="/requirements" class="cta-link">Click here to see the requirements to be a CA :]</a>
+
+          </div>
+        </div>
       </div>
-
-      <h1 class="title">Who is a CA?</h1>
-
-      <div class="content-box">
-        <div class="image-placeholder">
-          <img
-            src="{{ url_for('static', filename='images/ca_img.png') }}"
-            alt="CA work at Colby College"
-            description="CA work at Colby College"
-          />
-        </div>
-       
-        <div class="description-box">
-          <h2>Role of a Community Advisor</h2>
-          <p>
-            The Community Advisor (CA) position at Colby College is a vital
-            leadership role dedicated to creating a safe, inclusive, and
-            supportive living environment in residence halls. CAs play an
-            essential part in fostering community, building connections, and
-            supporting the academic and personal growth of students.
-          </p>
-
-          <h3>Responsibilities</h3>
-          <ul>
-            <li>
-              <strong>Community Development:</strong> Establish and maintain an
-              inclusive environment where all residents feel welcomed,
-              respected, and supported. Plan and execute programming, organize
-              hall meetings, and help residents connect with each other.
-            </li>
-            <li>
-              <strong>Conflict Resolution:</strong> Mediate conflicts and
-              facilitate roommate agreements proactively, helping to resolve any
-              concerns in a constructive manner.
-            </li>
-            <li>
-              <strong>Resource Referral:</strong> Serve as a knowledgeable
-              support system for students, referring them to on-campus resources
-              such as counseling, academic support, and health services.
-            </li>
-            <li>
-              <strong>Duty & Emergency Response:</strong> Participate in a
-              nightly duty rotation, conduct regular safety checks, and assist
-              during emergencies, ensuring a safe environment for all residents.
-            </li>
-            <li>
-              <strong>Student Accountability:</strong> Uphold community
-              standards and address inappropriate behaviors consistently. Work
-              with professional staff to maintain a respectful, accountable
-              community.
-            </li>
-          </ul>
-
-          <h3>Training and Development</h3>
-          <p>
-            CAs undergo extensive training in leadership, community building,
-            and emergency response. Training sessions occur at the beginning of
-            each semester and prior to JanPlan. Attendance is mandatory to
-            ensure all CAs are well-prepared to support their communities
-            effectively.
-          </p>
-
-          <h3>Testimonials from CAs</h3>
-          <blockquote>
-            "Being a CA has allowed me to make a difference in my peers' lives
-            and build a community that feels like home. It's been a
-            transformative experience!" – Alex, Senior CA
-          </blockquote>
-          <blockquote>
-            "The CA position has helped me grow as a leader, learn about
-            conflict resolution, and make connections with residents from all
-            backgrounds." – Taylor, Junior CA
-          </blockquote>
-
-          <h3>Perks and Compensation</h3>
-          <p>
-            CAs receive an annual stipend of $5,000 and are assigned a
-            designated single bedroom. This role offers invaluable skills in
-            leadership, communication, and problem-solving, which are highly
-            sought after by future employers.
-          </p>
-        </div>
-      </div>
-      <div class="cta-box">
-          <a href="/requirements" class="cta-link"
-            >Click here to see the requirements to be a CA</a>
-        </div>
-
     </div>
   </body>
 </html>
+
