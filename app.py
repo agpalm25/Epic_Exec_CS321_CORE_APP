@@ -4,6 +4,8 @@ import os
 from views import main_blueprint
 from auth import auth_blueprint
 from flask_login import LoginManager
+import pymysql
+pymysql.install_as_MySQLdb()
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,9 +28,6 @@ def load_user(id):
 # Register blueprint for routes
 app.register_blueprint(main_blueprint)
 app.register_blueprint(auth_blueprint)
-
-with app.app_context():
-    db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True)
