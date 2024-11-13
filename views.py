@@ -6,7 +6,7 @@ import os
 import logging
 from email_sender import send_application_confirmation_email, send_interview_confirmation_email
 from flask_login import login_required
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -115,15 +115,34 @@ def application():
 @login_required
 @main_blueprint.route("/admin_homepage")
 def admin_home():
-    search_query = request.args.get('search', '')
+    search_query = request.args.get('search', '').strip()
 
     if search_query:
-        applicants = ApplicantInformation.query.filter(
-            or_(
-                ApplicantInformation.first_name.ilike(f'%{search_query}%'),
-                ApplicantInformation.last_name.ilike(f'%{search_query}%')
-            )
-        ).all()
+        search_terms = search_query.split()
+
+        if len(search_terms) > 1:
+            applicants = ApplicantInformation.query.filter(
+                or_(
+                    and_(
+                        ApplicantInformation.first_name.ilike(f'%{search_terms[0]}%'),
+                        ApplicantInformation.last_name.ilike(f'%{search_terms[-1]}%')
+                    ),
+                    *[
+                        or_(
+                            ApplicantInformation.first_name.ilike(f'%{term}%'),
+                            ApplicantInformation.last_name.ilike(f'%{term}%')
+                        )
+                        for term in search_terms
+                    ]
+                )
+            ).all()
+        else:
+            applicants = ApplicantInformation.query.filter(
+                or_(
+                    ApplicantInformation.first_name.ilike(f'%{search_query}%'),
+                    ApplicantInformation.last_name.ilike(f'%{search_query}%')
+                )
+            ).all()
     else:
         applicants = ApplicantInformation.query.all()
 
