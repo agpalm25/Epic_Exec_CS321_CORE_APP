@@ -1,14 +1,19 @@
 """Views module for the CA application system."""
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
-from sqlalchemy import or_, and_
-from werkzeug.utils import secure_filename
 import logging
 from datetime import datetime
 
-from models import db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
-from email_sender import send_application_confirmation_email, send_interview_confirmation_email
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
+from sqlalchemy import or_, and_
+from sqlalchemy.exc import SQLAlchemyError
+
+from models import (
+    db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
+)
+from email_sender import (
+    send_application_confirmation_email, send_interview_confirmation_email
+)
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -36,7 +41,7 @@ def requirements():
 
 
 @main_blueprint.route("/appointment")
-def appointment():
+def appointment_page():
     """Render the appointment page."""
     return render_template("appointment.html")
 
@@ -65,11 +70,18 @@ def application():
 
             return redirect(url_for('main.ca_info'))
 
-        except Exception as e:
+        except SQLAlchemyError as e:
             db.session.rollback()
-            logger.error("Error submitting application: %s", str(e))
+            logger.error("Database error submitting application: %s", str(e))
             flash('Error submitting application. Please try again later.', 'danger')
-            return redirect(url_for('main.application'))
+        except ValueError as e:
+            logger.error("Value error submitting application: %s", str(e))
+            flash('Invalid input in application form. Please check your entries.', 'danger')
+        except Exception as e:
+            logger.error("Unexpected error submitting application: %s", str(e))
+            flash('An unexpected error occurred. Please try again later.', 'danger')
+
+        return redirect(url_for('main.application'))
 
     return render_template('application.html')
 
@@ -127,9 +139,20 @@ def send_confirmation_email(email):
     try:
         send_application_confirmation_email(email)
         flash('Application submitted successfully! A confirmation email has been sent.', 'success')
+    except (ConnectionError, TimeoutError) as e:
+        logger.error("Network error sending confirmation email: %s", str(e))
+        flash(
+            'Application submitted successfully! '
+            'However, there was an issue sending the confirmation email.',
+            'warning'
+        )
     except Exception as e:
-        logger.error("Failed to send application confirmation email: %s", str(e))
-        flash('Application submitted successfully! However, there was an issue sending the confirmation email.', 'warning')
+        logger.error("Unexpected error sending confirmation email: %s", str(e))
+        flash(
+            'Application submitted successfully! '
+            'However, there was an issue sending the confirmation email.',
+            'warning'
+        )
 
 
 @login_required
@@ -164,21 +187,24 @@ def search_applicants(search_query):
                 ]
             )
         ).all()
-    else:
-        return ApplicantInformation.query.filter(
-            or_(
-                ApplicantInformation.first_name.ilike(f'%{search_query}%'),
-                ApplicantInformation.last_name.ilike(f'%{search_query}%')
-            )
-        ).all()
+
+    return ApplicantInformation.query.filter(
+        or_(
+            ApplicantInformation.first_name.ilike(f'%{search_query}%'),
+            ApplicantInformation.last_name.ilike(f'%{search_query}%')
+        )
+    ).all()
 
 
 def get_applicants_data(applicants):
     """Get formatted data for applicants."""
     applicants_data = []
     for applicant in applicants:
-        appointment = Appointment.query.filter_by(student_id=applicant.student_id).first()
-        interview_status = "Yet To Schedule" if not appointment else f"Scheduled for {appointment.date} at {appointment.time}"
+        appt = Appointment.query.filter_by(student_id=applicant.student_id).first()
+        interview_status = (
+            "Yet To Schedule" if not appt
+            else f"Scheduled for {appt.date} at {appt.time}"
+        )
         applicants_data.append({
             'first_name': applicant.first_name,
             'last_name': applicant.last_name,
@@ -191,7 +217,7 @@ def get_applicants_data(applicants):
 
 
 @main_blueprint.route("/assessment/<string:student_id>")
-def assessment(student_id):
+def assessment_page(student_id):
     """Render the assessment page for a specific applicant."""
     applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
     return render_template("assessment.html", applicant=applicant)
@@ -209,7 +235,7 @@ def appt_submit():
 
         if not applicant:
             flash('No application found for this student ID. Please submit an application first.', 'error')
-            return redirect(url_for('main.appointment'))
+            return redirect(url_for('main.appointment_page'))
 
         try:
             date = datetime.strptime(date_str, '%Y-%m-%d').date()
@@ -225,17 +251,18 @@ def appt_submit():
 
             send_interview_confirmation(applicant, date_str, time_str)
 
-            return redirect(url_for('main.appointment'))
+            return redirect(url_for('main.appointment_page'))
         except ValueError:
             flash('Invalid date or time format. Please try again.', 'error')
-            return redirect(url_for('main.appointment'))
-        except Exception as e:
+        except SQLAlchemyError as e:
             db.session.rollback()
-            logger.error("Error scheduling appointment: %s", str(e))
+            logger.error("Database error scheduling appointment: %s", str(e))
             flash('Error scheduling appointment. Please try again later.', 'danger')
-            return redirect(url_for('main.appointment'))
+        except Exception as e:
+            logger.error("Unexpected error scheduling appointment: %s", str(e))
+            flash('An unexpected error occurred. Please try again later.', 'danger')
 
-    return redirect(url_for('main.appointment'))
+    return redirect(url_for('main.appointment_page'))
 
 
 def send_interview_confirmation(applicant, date_str, time_str):
@@ -248,9 +275,20 @@ def send_interview_confirmation(applicant, date_str, time_str):
             time_str
         )
         flash('Appointment scheduled successfully! A confirmation email has been sent.', 'success')
+    except (ConnectionError, TimeoutError) as e:
+        logger.error("Network error sending interview confirmation: %s", str(e))
+        flash(
+            'Appointment scheduled successfully! '
+            'However, there was an issue sending the confirmation email.',
+            'warning'
+        )
     except Exception as e:
-        logger.error("Failed to send interview confirmation email: %s", str(e))
-        flash('Appointment scheduled successfully! However, there was an issue sending the confirmation email.', 'warning')
+        logger.error("Unexpected error sending interview confirmation: %s", str(e))
+        flash(
+            'Appointment scheduled successfully! '
+            'However, there was an issue sending the confirmation email.',
+            'warning'
+        )
 
 
 @main_blueprint.route('/applicants')
@@ -268,7 +306,12 @@ def view_application(student_id):
     applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
     preferences = ApplicantPreferences.query.filter_by(student_id=student_id).first()
     additional_info = AdditionalInformation.query.filter_by(student_id=student_id).first()
-    return render_template('view_application.html', applicant=applicant, preferences=preferences, additional_info=additional_info)
+    return render_template(
+        'view_application.html',
+        applicant=applicant,
+        preferences=preferences,
+        additional_info=additional_info
+    )
 
 
 @login_required
@@ -278,8 +321,8 @@ def assess_applicant(student_id):
     applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
 
     if request.method == 'POST':
-        assessment = request.form.get('assessment')
-        applicant.assessment_status = assessment
+        assessment_status = request.form.get('assessment')
+        applicant.assessment_status = assessment_status
         db.session.commit()
         flash('Assessment updated successfully', 'success')
         return redirect(url_for('main.admin_home'))
