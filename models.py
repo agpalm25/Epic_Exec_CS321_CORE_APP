@@ -1,3 +1,5 @@
+"""Database models for the CA application system."""
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -5,22 +7,28 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 class Admin(UserMixin, db.Model):
+    """Admin model for user authentication and management."""
+
     __tablename__ = 'admin'
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    
+
     def set_password(self, password):
+        """Set the password hash for the admin user."""
         self.password_hash = generate_password_hash(password)
-        
+
     def check_password(self, password):
+        """Check if the provided password matches the stored hash."""
         return check_password_hash(self.password_hash, password)
-    
+
     def __repr__(self):
         return f'<Admin {self.email}>'
 
 class Appointment(db.Model):
+    """Appointment model for scheduling interviews."""
+
     __tablename__ = 'appointment'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -34,8 +42,10 @@ class Appointment(db.Model):
         return f'<Appointment for {self.student_id} on {self.date} at {self.time}>'
 
 class ApplicantInformation(db.Model):
+    """ApplicantInformation model for storing applicant details."""
+
     __tablename__ = 'applicant_information'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
@@ -63,6 +73,7 @@ class ApplicantInformation(db.Model):
     appointment = db.relationship('Appointment', back_populates='applicant', uselist=False)
 
     def get_interview_status(self):
+        """Get the current interview status for the applicant."""
         if self.appointment:
             return f"Scheduled for {self.appointment.date} at {self.appointment.time}"
         return "Yet To Schedule"
@@ -71,20 +82,30 @@ class ApplicantInformation(db.Model):
         return f'<ApplicantInformation {self.first_name} {self.last_name}>'
 
 class ApplicantPreferences(db.Model):
+    """ApplicantPreferences model for storing applicant preferences."""
+
     __tablename__ = 'applicant_preferences'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     substance_free_housing_interest = db.Column(db.Integer, nullable=False)
     healthy_colby_interest = db.Column(db.String(100), nullable=False)
     population_interest = db.Column(db.String(100), nullable=False)
-    staff_interest = db.Column(db.PickleType, nullable=False) 
+    staff_interest = db.Column(db.PickleType, nullable=False)
     illc_interest = db.Column(db.String(100), nullable=False)
     student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
 
+    def __repr__(self):
+        return f'<ApplicantPreferences for {self.student_id}>'
+
 class AdditionalInformation(db.Model):
+    """AdditionalInformation model for storing additional applicant details."""
+
     __tablename__ = 'additional_information'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     why_ca = db.Column(db.String(1000), nullable=False)
     additional_comments = db.Column(db.String(1000), nullable=True)
     student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
+
+    def __repr__(self):
+        return f'<AdditionalInformation for {self.student_id}>'

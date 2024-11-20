@@ -8,6 +8,19 @@ This is a Community Advisor (CA) application management system for a college or 
 2. Interview Scheduling: Applicants can schedule interview appointments.
 3. Admin Dashboard: Administrators can view and manage applicant information, including application status, interview status, and assessment status.
 4. Email Notifications: The system sends confirmation emails for application submissions and interview scheduling.
+5. Search Functionality: Admins can search for applicants by name.
+
+## Project Structure
+
+- `app.py`: Main application file, sets up the Flask app and database
+- `models.py`: Database models (Admin, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation)
+- `views.py`: Route definitions and view functions for main application logic
+- `auth.py`: Authentication-related routes and functions
+- `email_sender.py`: Email notification functionality
+- `test_db.py`: Database initialization and testing script
+- `test_sqlite.py`: SQLite database testing script
+- `templates/`: HTML templates for rendering pages
+- `static/`: Static files (CSS, JavaScript, images)
 
 ## Setup
 
@@ -28,16 +41,18 @@ This is a Community Advisor (CA) application management system for a college or 
    pip install -r requirements.txt
    ```
 
-4. Set up the database:
-   ```
-   flask db init
-   flask db migrate
-   flask db upgrade
-   ```
-
-5. Create a `.env` file in the root directory and add the following:
+4. Set up environment variables:
+   Create a `.env` file in the root directory and add the following:
    ```
    SECRET_KEY=your_secret_key_here
+   JAWSDB_URL=your_database_url_here
+   SENDER_EMAIL=your_email@example.com
+   SENDER_PASSWORD=your_email_password
+   ```
+
+5. Initialize the database:
+   ```
+   python test_db.py
    ```
 
 ## Running the Application
@@ -45,20 +60,29 @@ This is a Community Advisor (CA) application management system for a college or 
 To run the application, use the following command:
 
 ```
-flask run
+python app.py
 ```
 
 The application will be available at `http://localhost:5000`.
 
 
-## Project Structure
 
-- `app.py`: Main application file
-- `models.py`: Database models
-- `views.py`: Route definitions and view functions
-- `email_sender.py`: Email notification functionality
-- `templates/`: HTML templates
-- `static/`: Static files (CSS, JavaScript)
+## Testing
+
+To run tests for the SQLite database setup:
+
+```
+python test_sqlite.py
+```
+
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 

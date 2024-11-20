@@ -1,3 +1,5 @@
+"""Module for handling email sending functionality in the CA application system."""
+
 import smtplib
 import os
 import logging
@@ -8,9 +10,23 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def send_email(to_email, subject, body):
+    """
+    Send an email using the configured SMTP server.
+
+    Args:
+        to_email (str): Recipient's email address
+        subject (str): Email subject
+        body (str): Email body content
+
+    Returns:
+        bool: True if email sent successfully, False otherwise
+
+    Raises:
+        ValueError: If email credentials are not properly configured
+    """
     sender_email = os.environ.get('SENDER_EMAIL')
     sender_password = os.environ.get('SENDER_PASSWORD')
-   
+
     if not sender_email or not sender_password:
         logger.error("SENDER_EMAIL or SENDER_PASSWORD environment variables are not set")
         raise ValueError("Email credentials are not properly configured")
@@ -20,19 +36,28 @@ def send_email(to_email, subject, body):
     message["To"] = to_email
     message["Subject"] = subject
     message.attach(MIMEText(body, "plain"))
-   
+
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
             server.login(sender_email, sender_password)
             server.send_message(message)
-        logger.info(f"Email sent successfully to {to_email}")
+        logger.info("Email sent successfully to %s", to_email)
         return True
     except Exception as e:
-        logger.error(f"Failed to send email to {to_email}. Error: {str(e)}")
+        logger.error("Failed to send email to %s. Error: %s", to_email, str(e))
         raise
 
 def send_application_confirmation_email(applicant_email):
+    """
+    Send a confirmation email for CA application submission.
+
+    Args:
+        applicant_email (str): Applicant's email address
+
+    Returns:
+        bool: True if email sent successfully, False otherwise
+    """
     subject = "CA Application Received - Thank You!"
     body = """
     Greetings,
@@ -53,10 +78,22 @@ def send_application_confirmation_email(applicant_email):
     Associate Director of Residential Education
     Colby's Office of the Residential Experience (CORE)
     """
-   
+
     return send_email(applicant_email, subject, body)
 
 def send_interview_confirmation_email(applicant_email, full_name, date, time):
+    """
+    Send a confirmation email for scheduled CA interview.
+
+    Args:
+        applicant_email (str): Applicant's email address
+        full_name (str): Applicant's full name
+        date (str): Scheduled interview date
+        time (str): Scheduled interview time
+
+    Returns:
+        bool: True if email sent successfully, False otherwise
+    """
     subject = "CA Interview Scheduled - Confirmation"
     body = f"""
     Dear {full_name},
@@ -76,5 +113,5 @@ def send_interview_confirmation_email(applicant_email, full_name, date, time):
     Best regards,
     Colby's Office of the Residential Experience (CORE)
     """
-   
+
     return send_email(applicant_email, subject, body)

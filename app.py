@@ -1,10 +1,13 @@
-from flask import Flask
-from models import db, Admin, ApplicantInformation
+"""Main application module for the CA application system."""
+
 import os
+from dotenv import load_dotenv
+from flask import Flask
+from flask_login import LoginManager
+
+from models import db, Admin
 from views import main_blueprint
 from auth import auth_blueprint
-from flask_login import LoginManager
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -19,8 +22,9 @@ login_manager.login_view = 'auth.signin'
 
 
 @login_manager.user_loader
-def load_user(id):
-    return Admin.query.get(int(id))
+def load_user(user_id):
+    """Load user by ID for Flask-Login."""
+    return Admin.query.get(int(user_id))
 
 
 # Register blueprint for routes
