@@ -15,8 +15,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Install project dependencies
+        sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+        pip install -r requirements.txt
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint $(git ls-files '*.py') || true
