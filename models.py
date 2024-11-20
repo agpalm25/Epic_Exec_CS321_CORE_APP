@@ -27,12 +27,17 @@ class Admin(UserMixin, db.Model):
         return f'<Admin {self.email}>'
 
 class Appointment(db.Model):
-    """Appointment model for scheduling interviews."""
+    """
+    Appointment model for scheduling interviews.
+    
+    Note: This model primarily serves as a data container and does not require additional methods.
+    """
 
     __tablename__ = 'appointment'
 
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'),
+                           nullable=False)
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
 
@@ -82,7 +87,11 @@ class ApplicantInformation(db.Model):
         return f'<ApplicantInformation {self.first_name} {self.last_name}>'
 
 class ApplicantPreferences(db.Model):
-    """ApplicantPreferences model for storing applicant preferences."""
+    """
+    ApplicantPreferences model for storing applicant preferences.
+    
+    Note: This model primarily serves as a data container and does not require additional methods.
+    """
 
     __tablename__ = 'applicant_preferences'
 
@@ -92,20 +101,26 @@ class ApplicantPreferences(db.Model):
     population_interest = db.Column(db.String(100), nullable=False)
     staff_interest = db.Column(db.PickleType, nullable=False)
     illc_interest = db.Column(db.String(100), nullable=False)
-    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'),
+                           nullable=False)
 
     def __repr__(self):
         return f'<ApplicantPreferences for {self.student_id}>'
 
 class AdditionalInformation(db.Model):
-    """AdditionalInformation model for storing additional applicant details."""
+    """
+    AdditionalInformation model for storing additional applicant details.
+    
+    Note: This model primarily serves as a data container and does not require additional methods.
+    """
 
     __tablename__ = 'additional_information'
 
     id = db.Column(db.Integer, primary_key=True)
     why_ca = db.Column(db.String(1000), nullable=False)
     additional_comments = db.Column(db.String(1000), nullable=True)
-    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
+    student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'),
+                           nullable=False)
 
     def __repr__(self):
         return f'<AdditionalInformation for {self.student_id}>'

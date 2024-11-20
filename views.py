@@ -162,7 +162,11 @@ def admin_home():
     search_query = request.args.get('search', '').strip()
     applicants = search_applicants(search_query)
     applicants_data = get_applicants_data(applicants)
-    return render_template("admin_homepage.html", applicants=applicants_data, search_query=search_query)
+    return render_template(
+        "admin_homepage.html",
+        applicants=applicants_data,
+        search_query=search_query
+    )
 
 
 def search_applicants(search_query):
