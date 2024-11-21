@@ -30,7 +30,6 @@ class Appointment(db.Model):
     """
     Appointment model for scheduling interviews.
     
-    Note: This model primarily serves as a data container and does not require additional methods.
     """
 
     __tablename__ = 'appointment'
@@ -90,7 +89,6 @@ class ApplicantPreferences(db.Model):
     """
     ApplicantPreferences model for storing applicant preferences.
     
-    Note: This model primarily serves as a data container and does not require additional methods.
     """
 
     __tablename__ = 'applicant_preferences'
@@ -111,7 +109,6 @@ class AdditionalInformation(db.Model):
     """
     AdditionalInformation model for storing additional applicant details.
     
-    Note: This model primarily serves as a data container and does not require additional methods.
     """
 
     __tablename__ = 'additional_information'
