@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+    flex-direction: column;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+}
+
+input {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+select {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+/* DELETE THIS WHEN WE CARE ABOUT APPEARANCE - - - - - - - - - - - - - ! */
+.delLabel {
+    color: black;
+}
+
+.showMe {
+    color: black;
+    margin-bottom: 0px;
+}
+
+
+
+.container {
+    text-align: top;
+    margin-top: 20px;
+}
+
+.back-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.sign-in-box {
+    background-color: #76C3C3;
+    padding: 40px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.apptTitle {
+    background-color: rgba(100, 138, 68);
+    padding: 30px;
+    border-radius: 20px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.apptTransparentBackground {
+    background-color: rgba(183, 248, 130, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    width: 600px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.apptBtn {
+    padding: 10px;
+    background-color: rgb(51, 83, 25);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.apptForm {
+    background-color: rgba(100, 138, 68);
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+.apptText {
+    color: rgba(100, 138, 68);
+}
+
+.apptText {
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #5A5A5A;
+}
+
+.btn {
+    padding: 10px;
+    background-color: #345B5E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2C4D4F;
+}
+
+.forgot-password {
+    font-size: 12px;
+    text-decoration: none;
+    color: #5A5A5A;
+    margin-top: 10px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
