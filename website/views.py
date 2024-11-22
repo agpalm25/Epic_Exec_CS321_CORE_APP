@@ -1,12 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app as app
-from models import db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
+# from models import db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
 import logging
-from email_sender import send_application_confirmation_email, send_interview_confirmation_email
+# from email_sender import send_application_confirmation_email, send_interview_confirmation_email
 from flask_login import login_required
 from sqlalchemy import or_, and_
+from website import db
+from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
+from .email_sender import send_application_confirmation_email, send_interview_confirmation_email
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)

@@ -1,8 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-
-db = SQLAlchemy()
+from website import db
 
 class Admin(UserMixin, db.Model):
     __tablename__ = 'admin'
@@ -54,6 +53,9 @@ class ApplicantInformation(db.Model):
     class_year = db.Column(db.String(20), nullable=False)
     cumulative_gpa = db.Column(db.Float, nullable=False)
     leadership_experience = db.Column(db.PickleType, nullable=False)
+    application_status = db.Column(db.String(50), default='Submitted', nullable=False)
+    assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
+    pronouns = db.Column(db.String(50), nullable=False, default='N/A')
     application_status = db.Column(db.String(50), default='Submitted', nullable=False)
     assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
 
