@@ -31,9 +31,11 @@ def create_app():
     from .models import Admin
     from .views import main_blueprint
     from .auth import auth_blueprint
+    from .admin import admin_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(admin_blueprint)
 
     # Flask-Login: Define user loader
     @login_manager.user_loader
