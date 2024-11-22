@@ -23,9 +23,9 @@ def home():
     return render_template("home.html")
 
 
-@main_blueprint.route("/oldhome")
-def home2():
-    return render_template("old_home.html")
+@main_blueprint.route("/admin_fun")
+def admin_fun():
+    return render_template("admin_fun.html")
 
 
 @main_blueprint.route("/requirements")
