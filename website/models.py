@@ -19,6 +19,21 @@ class Admin(UserMixin, db.Model):
     def __repr__(self):
         return f'<Admin {self.email}>'
 
+class Time_Bounds(db.Model) :
+    __tablename__ = 'time_bounds'
+
+    id = db.Column(db.Integer, primary_key=True)
+    min_d = db.Column(db.String(10))
+    max_d = db.Column(db.String(10))
+    min_t = db.Column(db.String(10))
+    max_t = db.Column(db.String(10))
+
+    def __repr__(self):
+        return f"<Time_Bounds(id={self.id}, min_d={self.min_d}, max_d={self.max_d}, min_t={self.min_t}, max_t={self.max_t})>"
+    def get(self):
+        return ({self.min_d}, {self.max_d}, {self.min_t}, {self.max_t})
+
+
 class Appointment(db.Model):
     __tablename__ = 'appointment'
 
