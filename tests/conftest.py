@@ -1,42 +1,52 @@
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import pytest
 from website import create_app, db as _db
 
+
 @pytest.fixture(scope='session')
 def app():
+    """Create the Flask application."""
     app = create_app()
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    app.config['SERVER_NAME'] = 'localhost.localdomain'  
+    app.config['SERVER_NAME'] = 'localhost.localdomain'
     return app
 
 @pytest.fixture(scope='session')
 def db(app):
+    """Set up the database."""
     with app.app_context():
-        _db.create_all()
+        _db.create_all() 
         yield _db
-        _db.drop_all()
+        _db.drop_all() 
 
 @pytest.fixture(scope='function')
 def client(app):
+    """Provide a test client."""
     return app.test_client()
 
 @pytest.fixture(scope='function')
-def session(db):
-    connection = db.engine.connect()
-    transaction = connection.begin()
-    session = db.create_scoped_session()
+def session(app, db):
+    """
+    Provide a database session for a test function,
+    rolling back changes after the test.
+    """
+    with app.app_context():
+        connection = db.engine.connect()
+        transaction = connection.begin()
 
-    yield session
+        db.session.bind = connection
+        yield db.session
 
-    transaction.rollback()
-    connection.close()
-    session.remove()
+        transaction.rollback()
+        connection.close()
+        db.session.remove()
 
 @pytest.fixture(scope='function')
 def app_context(app):
+    """Provide an app context for a test function."""
     with app.app_context():
         yield
+
