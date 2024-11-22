@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_application.css') }}">
 </head>
+
 <body class="apptBody">
+
     <div class="container">
+
         <a href="/" class="back-link">back to home</a> <br>
+
         <h1>Community Advisor Application</h1> <br>
         <h2>2024-2025 Academic Year</h2><br>
+
         <div id="mid_year_page_1">
+
             <h3>Mid Year Hire Process:</h3> <br>
+
             <p>Application Deadline: <br>
                Interview Dates: <br>
                Decisions: <br>
             </p>
+
             <h3>Position Descriptions: </h3> <br>
+
             <a href="{{ url_for('main.ca_info') }}">Community Advisory Position Description</a> <br>
+
             <p>For assistance in completing this Application, or for any questions, please contact Kyle Arthenayake (Associate Director of Residential Education) at karthena@colby.edu or Shikha Shrestha (Assistant Director of Residential Education) at shshrest@colby.edu.</p>
+
         </div>
+
         <div id="applicant_information_page_2">
+
             <form action="{{ url_for('main.application') }}" method="POST" class="applicForm"> 
 
                 <fieldset id="page_2">
@@ -179,6 +193,7 @@
                     <p>
                         A current and updated resume must accompany your application in order to complete your application materials. Please upload your resume below. <br>
                         Candidates are encouraged to contact DavisConnects in preparation of the resume portion of the application process. DavisConnects is located Grossman Hall. This office can be reached at 207-859-4140 or at DavisConnects@colby.edu.</p>
+                    <!-- try to input a file later...? -->
                     <input type="" id="" name=""> <br>
 
                     <label for="add_info">ADDITIONAL INFORMATION (OPTIONAL): </label>
@@ -271,3 +286,9 @@
                     <input type="submit" value="submit">
 
                 </fieldset>
+
+
+
+        </div>
+    </div>
+</body>
