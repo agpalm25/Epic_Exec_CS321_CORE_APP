@@ -38,7 +38,7 @@ def appointment():
     return render_template("appointment.html")
 
 
-@main_blueprint.route("/ca-info")
+@main_blueprint.route("/ca_info")
 def ca_info():
     return render_template("ca_info.html")
 
