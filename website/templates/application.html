@@ -2,61 +2,196 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_application.css') }}">
-</head>
 
-<body class="apptBody">
+    <title>Application</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+<style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; 
+        height: 100%; 
+        background: url('{{ url_for("static", filename="images/williams.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; 
+        gap: 20px; 
+        padding: 20px;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .home-icon {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.5em;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 10px;
+        text-align: center;
+        z-index: 10;
+    }
+
+    .home-icon a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .home-icon a:hover {
+        color: #ddd;
+    }
+
+    .text-section, .form-section {
+        flex: none;
+        width: 100%;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+    }
+
+
+    .form-section {
+        display: none; 
+        gap: 10px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+    }
+
+    .form-section .col-md-6 {
+        margin-bottom: 20px; 
+    }
+
+
+    .text-section.active, .form-section.active {
+        display: block;
+    }
+
+    .arrow-button {
+        font-size: 2rem;
+        cursor: pointer;
+        margin-top: 20px;
+        color: #007bff;
+    }
+
+    .text-section.inactive {
+        display: none;
+    }
+
+    .bottom-link {
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+        padding: 10px 10px;
+        color: rgb(255, 255, 255);
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    .bottom-link a {
+        color: rgb(255, 251, 205);
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .bottom-link a:hover {
+        color: rgb(51, 83, 25);
+    }
+
+</style>
+<body> 
+
+    <div class="home-icon">
+
+        <a href="/" title="Go to Homepage">
+        <i class="fas fa-home"></i>
+        </a>
+
+    </div>
 
     <div class="container">
 
-        <a href="/" class="back-link">back to home</a> <br>
+        <div class="text-section active" id="textSection">
 
-        <h1>Community Advisor Application</h1> <br>
-        <h2>2024-2025 Academic Year</h2><br>
+            <h1>Community Advisor Application</h1> <br>
 
-        <div id="mid_year_page_1">
+            <h2>2024-2025 Academic Year</h2><br>
 
-            <h3>Mid Year Hire Process:</h3> <br>
+                <h3>Mid Year Hire Process:</h3> <br>
 
-            <p>Application Deadline: <br>
-               Interview Dates: <br>
-               Decisions: <br>
-            </p>
+                <p>Application Deadline: <br>
+                   Interview Dates: <br>
+                   Decisions: <br>
+                </p>
 
-            <h3>Position Descriptions: </h3> <br>
+                <h3>Position Descriptions: </h3> <br>
 
-            <a href="{{ url_for('main.ca_info') }}">Community Advisory Position Description</a> <br>
+                <a href="{{ url_for('main.ca_info') }}">Community Advisory Position Description</a> <br>
 
-            <p>For assistance in completing this Application, or for any questions, please contact Kyle Arthenayake (Associate Director of Residential Education) at karthena@colby.edu or Shikha Shrestha (Assistant Director of Residential Education) at shshrest@colby.edu.</p>
+                <p>For assistance in completing this Application, or for any questions, please contact Kyle Arthenayake (Associate Director of Residential Education) at karthena@colby.edu or Shikha Shrestha (Assistant Director of Residential Education) at shshrest@colby.edu.</p>
+            
+            <div class="text-center">
 
+                <span class="arrow-button" id="showForm">
+                    &darr;
+
+                </span>
+            </div>
         </div>
 
-        <div id="applicant_information_page_2">
+        <div class="form-section" id="formSection">
+
+            <h1 class="text-center mb-4">Application Form</h1>
 
             <form action="{{ url_for('main.application') }}" method="POST" class="applicForm"> 
 
-                <fieldset id="page_2">
-                    <label for="last_name">LAST Name: </label>
-                    <input type="text" id="last_name" name="last_name" required> <br>
+                <div class="col-md-6">
+                    <label for="first_name" class="form-label">FIRST Name: </label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" required> <br>
+                </div>
 
-                    <label for="first_name">FIRST Name: </label>
-                    <input type="text" id="first_name" name="first_name" required> <br>
+                <div class="col-md-6">
+                    <label for="last_name" class="form-label">LAST Name: </label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" required> <br>
+                </div>
 
-                    <label for="preferred_name">PREFERRED Name: </label>
+                <div class="col-md-6">
+                    <label for="preferred_name" class="form-label">PREFERRED Name: </label>
                     <p>Please share if you have or go by a preferred name.</p>
-                    <input type="text" id="preferred_name" name="preferred_name" required> <br>
+                    <input type="text" id="preferred_name" name="preferred_name" class="form-control" required> <br>
+                    
+                </div>
 
-                    <label for="pronouns">Pronouns: </label>
-                    <input type="text" id="pronouns" name="pronouns" required> <br>
+                <div class="col-md-6">
+                    <label for="pronouns" class="form-label">Pronouns: </label>
+                    <input type="text" id="pronouns" name="pronouns" class="form-control" required> <br>
+                    
+                </div>
 
-                    <label for="student_id">Colby Student ID Number: </label>
-                    <input type="number" id="student_id" name="student_id" min="100000" max="999999"> <br>
+                <div class="col-md-6">
+                    <label for="student_id" class="form-label">Colby Student ID Number: </label>
+                    <input type="number" id="student_id" name="student_id" min="100000" max="999999" class="form-control"> <br>
+                    
+                </div>
 
-                    <label for="cur_residence">Current Residence Hall Assignment: </label> <br>
-                    <select id="cur_residence" name="cur_residence" size="3" required>
+                <div class="col-md-6">
+                    <label for="cur_residence" class="form-label">Current Residence Hall Assignment: </label> <br>
+                    <select id="cur_residence" name="cur_residence" size="3" class="form-control">
                         <option value="0">Alfond Main St. Commons</option>
                         <option value="1">Alfond Senior Apartments</option>
                         <option value="2">Anthony</option>
@@ -93,53 +228,79 @@
                         <option value="32">Away From Campus (Study Abroad)</option>
                     </select> <br>
                     
-                    <label for="cur_room_num">Current Room Assignment (Room Number): </label>
-                    <input type="number" id="cur_room_num" name="cur_room_num" min="000" max="999" required> <br>
+                </div>
 
-                    <label for="email">Colby College Email Address: </label>
+                <div class="col-md-6">
+                    <label for="cur_room_num" class="form-label">Current Room Assignment (Room Number): </label>
+                    <input type="number" id="cur_room_num" name="cur_room_num" min="000" max="999" class="form-control"> <br>
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Colby College Email Address: </label>
                     <p>Please ensure that it is accurate as all communication to candidates is only through the Colby College email address provided here.</p>
-                    <input type="text" id="email" name="email" required> <br>
-
-                    <label for="phone_number">Cell Phone Number:</label>
+                    <input type="text" id="email" name="email" class="form-control" required> <br>
+                    
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="phone_number" class="form-label">Cell Phone Number:</label>
                     <p> Please ONLY use the following format: XXX-XXX-XXXX</p>
-                    <input type="text" id="phone_number" name="phone_number" required> <br>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" required> <br>
+                    
+                </div>
 
-                    <label for="cur_position">Community Advisor position interest for the XXXX-XXXX Academic Year: </label>
+                <div class="col-md-6">
+                    <label for="cur_position" class="form-label">Community Advisor position interest for the XXXX-XXXX Academic Year: </label>
                     <p>Please select what best describes your interest/experience in the Community Advisory position.</p>
-                    <select id="cur_position" name="cur_position">
+                    <select id="cur_position" class="form-control" name="cur_position">
                         <option value="0">I am applying for a NEW Community Advisor Position</option>
                         <option value="1">I am applying for a RETURNING Community Advisor Position</option>
                     </select>
+                    
+                </div>
 
-                </fieldset>
+                <div class="col-md-6">
+                    <label for="major_1" class="form-label">Academic Major (1): </label>
+                    <input type="text" id="major_1" class="form-control" name="major_1" required> <br>
+                    
+                </div>
 
-                <fieldset id="page_3">
-
-                    <label for="major_1">Academic Major (1): </label>
-                    <input type="text" id="major_1" name="major_1" required> <br>
-
-                    <label for="major_2">Academic Major (2): </label>
+                <div class="col-md-6">
+                    <label for="major_2" class="form-label">Academic Major (2): </label>
                     <p>If applicable.</p>
-                    <input type="text" id="major_2" name="major_2"> <br>
+                    <input type="text" id="major_2" class="form-control" name="major_2"> <br>
+                    
+                </div>
 
-                    <label for="minor_1">Academic Minor (1): </label>
+                <div class="col-md-6">
+
+                    <label for="minor_1" class="form-label">Academic Minor (1): </label>
                     <p>If applicable.</p>
-                    <input type="text" id="minor_1" name="minor_1"> <br>
+                    <input type="text" id="minor_1" class="form-control" name="minor_1"> <br>
+                </div>
 
-                    <label for="minor_2">Academic Minor (2): </label>
+                <div class="col-md-6">
+                    <label for="minor_2" class="form-label">Academic Minor (2): </label>
                     <p>If applicable.</p>
-                    <input type="text" id="minor_2" name="minor_2"> <br>
+                    <input type="text" id="minor_2" class="form-control" name="minor_2"> <br>
+                    
+                </div>
 
-                    <label for="next_year_standing">Class Standing for Next Year (2024-2025): </label> <br>
-                    <select id="next_year_standing" name="next_year_standing" required>
+                <div class="col-md-6">
+                    <label for="next_year_standing" class="form-label">Class Standing for Next Year (2024-2025): </label> <br>
+                    <select id="next_year_standing" class="form-control" name="next_year_standing" required>
                         <option value="sophomore">Sophomore</option>
                         <option value="junior">Junior</option>
                         <option value="senior">Senior</option>
                         <option value="other">Other</option>
                     </select> <br>
+                    
+                </div>
 
-                    <label for="anticipated_month_year_grad">Anticipated Month/Year of Graduation: </label> <br>
-                    <select id="anticipated_month_year_grad" name="anticipated_month_year_grad" required>
+                <div class="col-md-6">
+                    <label for="anticipated_month_year_grad" class="form-label">Anticipated Month/Year of Graduation: </label> <br>
+                    <select id="anticipated_month_year_grad" name="anticipated_month_year_grad" class="form-control" required>
                         <option value="0">December 2024</option>
                         <option value="1">May 2025</option>
                         <option value="2">December 2025</option>
@@ -148,24 +309,36 @@
                         <option value="5">May 2027</option>
                         <option value="6">December 2027</option>
                     </select> <br>
+                    
+                </div>
 
-                    <label for="study_abroad">Anticipated Study Abroad/Away Plans: </label> <br>
-                    <select id="study_abroad" name="study_abroad" required>
+                <div class="col-md-6">
+                    <label for="study_abroad" class="form-label">Anticipated Study Abroad/Away Plans: </label> <br>
+                    <select id="study_abroad" name="study_abroad" class="form-control" required>
                         <option value="0">No intention to study abroad/away for 2024-2025</option>
                         <option value="1">Yes, intention to study abroad/away during Fall 2024</option>
                         <option value="2">Yes, intention to study abroad/away during Spring 2025</option>
                     </select> <br>
                     
-                    <label for="gpa">Current Cumulative Grade Point Average: </label>
-                    <input type="text" id="gpa" name="gpa" required> <br>
+                </div>
 
-                    <label for="time_commitments">Anticipated time commitments outside of academics and the CA role: </label>
-                    <input type="text" id="time_commitments" name="time_commitments"> <br>
+                <div class="col-md-6">
+                    <label for="gpa" class="form-label">Current Cumulative Grade Point Average: </label>
+                    <input type="text" id="gpa" name="gpa" class="form-control" required> <br>
+                    
+                </div>
 
-                    <label for="prev_leadership">Previous Colby Student Leadership Experiences: </label>
+                <div class="col-md-6">
+                    <label for="time_commitments" class="form-label">Anticipated time commitments outside of academics and the CA role: </label>
+                    <input type="text" id="time_commitments" class="form-control" name="time_commitments"> <br>
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <label for="prev_leadership" class="form-label">Previous Colby Student Leadership Experiences: </label>
                     <p>Have you previously held any of these Leadership roles? <br>
                        Hold down the ctrl/cmd button to select multiple options if you need to.</p> <br>
-                    <select name="prev_leadership" id="prev_leadership" multiple required>
+                    <select name="prev_leadership" class="form-control" id="prev_leadership" multiple required>
                         <option value="0">COOT Committee</option>
                         <option value="1">COOT Leader</option>
                         <option value="2">Community Advisor</option>
@@ -177,46 +350,40 @@
                         <option value="8">Orientation Leader</option>
                         <option value="9">None of the Above</option>
                     </select>
+                    
+                </div>
 
-                </fieldset>
+                <div class="col-md-6">
+                    <label for="text_response_1" class="form-label">What kind of student leader do you envision yourself to be in the residential community? Please draw on your experiences as a student living within the residential community.  (2000 letters max)</label>
+                    <input type="text" class="form-control" id="text_response_1" name="text_response_1" maxlength="2000"> <br>
+                    
+                </div>
 
-                <fieldset id="page_4">
+                <div class="col-md-6">
+                    <label for="add_info" class="form-label">ADDITIONAL INFORMATION (OPTIONAL): </label>
+                    <input type="text" class="form-control" id="add_info" name="add_info"> <br>
+                    
+                </div>
 
-                    <label for="text_response_1">What kind of student leader do you envision yourself to be in the residential community? Please draw on your experiences as a student living within the residential community.  (2000 letters max)</label>
-                    <input type="text" id="text_response_1" name="text_response_1" maxlength="2000"> <br>
-
-                </fieldset>
-
-                <fieldset id="page_5">
-
-                    <label for="resume">RESUME:</label>
-                    <p>
-                        A current and updated resume must accompany your application in order to complete your application materials. Please upload your resume below. <br>
-                        Candidates are encouraged to contact DavisConnects in preparation of the resume portion of the application process. DavisConnects is located Grossman Hall. This office can be reached at 207-859-4140 or at DavisConnects@colby.edu.</p>
-                    <!-- try to input a file later...? -->
-                    <input type="" id="" name=""> <br>
-
-                    <label for="add_info">ADDITIONAL INFORMATION (OPTIONAL): </label>
-                    <input type="text" id="add_info" name="add_info"> <br>
-
-
-                    <h2>Specialty Housing Interest: </h2>
-
-                    <label for="healthy_housing_interest">Healthy Colby Housing Interest: </label>
-                    <p>Healthy Colby Wellness Housing offers students an environment that supports student wellness by providing programming and opportunities that are focused on the five domains of health and wellness (Intellectual Inquiry, Physical Wellness & Wellbeing, Emotional Wellness & well-being, Relationships, and Community Citizenship). Students will be provided with opportunities to explore resources, programs, and options that encourage overall wellness on and off campus. <br>
+                <div class="col-md-6">
+                    <label for="healthy_housing_interest" class="form-label">Healthy Colby Housing Interest: </label>
+                    <p>Healthy Colby Wellness Housing offers students an environment that supports student wellness by providing programming and opportunities that are focused on the five domains of health and wellness (Intellectual Inquiry, Physical Wellness & Wellbeing, Emotional Wellness & well-being, Relationships, and Community Citizenship). Students will be provided with opportunities to explore resources, programs, and options that encourage overall wellness on and off campus. 
                         On a scale of 1-5, how interested are you in being a CA within Healthy Colby Wellness Housing (If the opportunity permits)? 1 being Not at all interested and 5 being extremely interested.</p>
-                    <select id="healthy_housing_interest" name="healthy_housing_interest" required>
+                    <select id="healthy_housing_interest" class="form-control" name="healthy_housing_interest" required>
                         <option value="5">5 - Extremely Interested</option>
                         <option value="4">4</option>
                         <option value="3">3 - Somewhat Interested</option>
                         <option value="2">2</option>
                         <option value="1">1 - Not At all Interested</option>
                     </select>
+                    
+                </div>
 
-                    <label for="substance_housing_interest"> Substance Free Housing Interest: </label>
-                    <p>Substance-Free housing at Colby College is dedicated to providing a housing experience in which there is zero substance use of any kind within the vicinity of the residential community. Further defined, this includes that residents of the building will not consume alcohol, smoke or use tobacco products of any kind (including use of vape pens, etc.), or smoke or use any marijuana or any marijuana-related product of any kind while inside any space of the designated residential building. Additionally, Colby College is a smoke free campus, meaning that smoking of any kind is prohibited on Colby property [smoking pertains to all forms of smoking and is not limited to tobacco products]. <br>
+                <div class="col-md-6">
+                    <label for="substance_housing_interest" class="form-label"> Substance Free Housing Interest: </label>
+                    <p>Substance-Free housing at Colby College is dedicated to providing a housing experience in which there is zero substance use of any kind within the vicinity of the residential community. Further defined, this includes that residents of the building will not consume alcohol, smoke or use tobacco products of any kind (including use of vape pens, etc.), or smoke or use any marijuana or any marijuana-related product of any kind while inside any space of the designated residential building. Additionally, Colby College is a smoke free campus, meaning that smoking of any kind is prohibited on Colby property [smoking pertains to all forms of smoking and is not limited to tobacco products]. 
                         On a scale of 1-5, how interested are you in being a CA within substance-free housing (if opportunity permits)?</p>
-                    <select id="substance_housing_interest" name="substance_housing_interest" required>
+                    <select id="substance_housing_interest" class="form-control" name="substance_housing_interest" required>
                         <option value="5">5 - Extremely Interested</option>
                         <option value="4">4</option>
                         <option value="3">3 - Somewhat Interested</option>
@@ -224,10 +391,13 @@
                         <option value="1">1 - Not At all Interested</option>
                     </select>
 
-                    <label for="intercultural_housing_interest">Intercultural Living Learning Community (ILLC) Housing Interest: </label>
-                    <p>The Intercultural Living Learning Community (ILLC): The ILLC will provide students an option to live in a purposefully diverse environment and engage in facilitated learning experiences to improve their ability to communicate across lines of difference, deepen their understanding of social identities, and develop the tools for cross-cultural collaboration. <br>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="intercultural_housing_interest" class="form-label">Intercultural Living Learning Community (ILLC) Housing Interest: </label>
+                    <p>The Intercultural Living Learning Community (ILLC): The ILLC will provide students an option to live in a purposefully diverse environment and engage in facilitated learning experiences to improve their ability to communicate across lines of difference, deepen their understanding of social identities, and develop the tools for cross-cultural collaboration. 
                         On a scale of 1-5, how interested are you in being a CA within the Intercultural Living Learning Community (ILLC) (if opportunity permits)?</p>
-                    <select id="intercultural_housing_interest" name="intercultural_housing_interest" required>
+                    <select id="intercultural_housing_interest" class="form-control" name="intercultural_housing_interest" required>
                         <option value="5">5 - Extremely Interested</option>
                         <option value="4">4</option>
                         <option value="3">3 - Somewhat Interested</option>
@@ -235,21 +405,15 @@
                         <option value="1">1 - Not At all Interested</option>
                     </select>
 
-                    <h2>Staff Interest: </h2>
-                    <p>Residence halls at Colby may have one or more Community Advisors living within the building. Some buildings only have one, while others may have upwards of 3. <br>
-                        Those working with co-CAs typically work collaboratively with one another within the building to meet the resident's need. <br>
-                        Buildings with one CA work independently but can have collaborations with other buildings for programming purposes. <br> 
+                </div>
+
+                <div class="col-md-6">
+                    <p>Residence halls at Colby may have one or more Community Advisors living within the building. Some buildings only have one, while others may have upwards of 3. 
+                        Those working with co-CAs typically work collaboratively with one another within the building to meet the resident's need. 
+                        Buildings with one CA work independently but can have collaborations with other buildings for programming purposes.  
                         On a scale of 1-5, please share your interests in each of the different building staffing opportunities.</p>
-                    <label for="staff_interest_1">Working in a building with one or more other Community Advisors </label>
-                    <select id="staff_interest_1" name="staff_interest_1" required>
-                        <option value="5">5 - Extremely Interested</option>
-                        <option value="4">4</option>
-                        <option value="3">3 - Somewhat Interested</option>
-                        <option value="2">2</option>
-                        <option value="1">1 - Not At all Interested</option>
-                    </select>
-                    <label for="staff_interest_2">Working in a building as the only Community Advisor </label>
-                    <select id="staff_interest_2" name="staff_interest_2" required>
+                    <label for="staff_interest_1" class="form-label">Working in a building with one or more other Community Advisors </label>
+                    <select id="staff_interest_1" class="form-control" name="staff_interest_1" required>
                         <option value="5">5 - Extremely Interested</option>
                         <option value="4">4</option>
                         <option value="3">3 - Somewhat Interested</option>
@@ -257,22 +421,35 @@
                         <option value="1">1 - Not At all Interested</option>
                     </select>
 
-                    <label for="pop_interest">Population Interest: </label>
-                    <p>Candidates, if selected, will have the opportunity to work exclusively with first-year students in select residence halls. This would allow for tailored programs, conversations, and connections to assist in the first-year transition. <br>
-                        What best describes your interest?</p>
-                    <select id="pop_interest" name="pop_interest" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="staff_interest_2" class="form-label" class="form-label">Working in a building as the only Community Advisor </label>
+                    <select id="staff_interest_2" class="form-control" name="staff_interest_2" required>
+                        <option value="5">5 - Extremely Interested</option>
+                        <option value="4">4</option>
+                        <option value="3">3 - Somewhat Interested</option>
+                        <option value="2">2</option>
+                        <option value="1">1 - Not At all Interested</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+                    <label for="pop_interest" class="form-label">Population Interest: </label>
+                    <p>Candidates, if selected, will have the opportunity to work exclusively with first-year students in select residence halls. This would allow for tailored programs, conversations, and connections to assist in the first-year transition. What best describes your interest?</p>
+                    <select id="pop_interest" class="form-control" name="pop_interest" required>
                         <option value="0">Highly interested in working with first year populations of residents</option>
                         <option value="1">Moderately interested in working with first year populations of residents</option>
                         <option value="2">Some interest in working with first year populations of residents</option>
                         <option value="3">Not interested in working with first year populations</option>
                     </select>
 
-                </fieldset>
+                </div>
 
-                <fieldset id="page_6">
-
+                <div class="col-md-6">
                     <p>I am aware of the Hall Staff position requirements that I am applying for. <br>
-                        By signing my name : <br> 
+                        By signing my name :  <br>
                         1: I signify that the information I have submitted in this intent application contains no intentional misinterpretations, omissions, or falsifications, and is true and accurate to the best of my knowledge. <br>
                         2: I  understand that incomplete or false information may subject me to removal from consideration for a Hall Staff position. <br>
                         3: I authorize Colby's Office of the Residential Experience to conduct an academic (including verification of grade point average) and student conduct record check during and after the processing of my application to provide information necessary to determine my ability to be employed. <br>
@@ -280,15 +457,30 @@
 
                     <p>Please sign your name as electronic recognition and acceptance of the above statements regarding your application materials.</p>
 
-                    <label for="signature"></label>
-                    <input type="text" id="signature" name="signature" required> <br>
+                    <label for="signature" class="form-label"></label>
+                    <input type="text" class="form-control" id="signature" name="signature" required> <br>
 
+                </div>
+
+                <div class="col-md-6">
                     <input type="submit" value="submit">
-
-                </fieldset>
-
-
+                </div>
 
         </div>
+
+        <div class="bottom-link">
+            <a href="https://commons.wikimedia.org/wiki/File:Williams_Dormitory,_Colby_College.jpg">Photo Credit</a>
+        </div>
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('showForm').addEventListener('click', function () {
+            document.getElementById('textSection').classList.remove('active');
+            document.getElementById('textSection').classList.add('inactive')
+            document.getElementById('formSection').classList.add('active');
+        });
+    </script>
 </body>
+</html>
