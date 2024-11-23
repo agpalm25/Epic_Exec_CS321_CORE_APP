@@ -1,33 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessment Form</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_assessment.css') }}">
+
+    <title>Assess Applicant</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 </head>
+<style>
+
+    body {
+        background: url('{{ url_for("static", filename="images/pugh.jpg") }}') no-repeat center center fixed;
+        background-size: cover; }
+
+    .container {
+        margin-top: 50px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.818);
+        border-radius: 15px; }
+
+    .home-icon {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.5em;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 10px;
+        text-align: center;
+        z-index: 10;
+    }
+
+    .home-icon a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .home-icon a:hover {
+        color: #ddd;
+    }
+
+    .bottom-link {
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+        padding: 10px 10px;
+        color: rgb(255, 255, 255);
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    .bottom-link a {
+        color: rgb(255, 251, 205);
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .bottom-link a:hover {
+        color: rgb(51, 83, 25);
+    }
+
+</style>
 <body>
-    <div class="header">
-        <h1>Assessment Form</h1>
-        <a href="{{ url_for('main.home') }}">back to home</a>
+
+    <div class="home-icon">
+
+        <a href="/admin_homepage" title="Go to Admin Homepage">
+        <i class="fas fa-home"></i>
+        </a>
+
     </div>
-    <div class="form-container">
-        <form>
-            <label for="question1">Question One:</label>
-            <input type="text" id="question1" placeholder="Response">
 
-            <label for="question2">Question Two:</label>
-            <input type="text" id="question2" placeholder="Response">
+    <div class="container">
 
-            <label for="question3">Question Three:</label>
-            <input type="text" id="question3" placeholder="Response">
+        <h1 class="display-1">Assess Applicant</h1>
 
-            <label for="notes">Other Notes:</label>
-            <textarea id="notes" placeholder="Proctor Notes"></textarea>
+        <h2>{{ applicant.first_name }} {{ applicant.last_name }}</h2>
+        <p>Student ID: {{ applicant.student_id }}</p>
+        <p>Current Assessment Status: {{ applicant.assessment_status }}</p>
+        
+        <form action="{{ url_for('main.assess_applicant', student_id=applicant.student_id) }}" method="POST">
 
-            <button type="submit">Save</button>
+            <label for="assessment">Overall Assessment:</label>
+
+            <div class="col-md-12">
+
+                <select name="assessment" id="assessment" class="form-select" required>
+
+                    <option value="" disabled selected>Select...</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Waitlisted">Waitlisted</option>
+                    <option value="Needs Further Review">Needs Further Review</option>
+
+                </select>
+            </div>
+            
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg mt-3">Submit Assessment</button>
+            </div>
+
         </form>
+
     </div>
-    <script src="script_assessment.js"></script>
+
+    <div class="bottom-link">
+        <a href=https://commons.wikimedia.org/wiki/File:Colby_College_Cotter_Union.JPG>Photo Credit</a>
+    </div>
+
 </body>
 </html>
