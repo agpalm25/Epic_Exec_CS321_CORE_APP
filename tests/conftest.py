@@ -58,4 +58,3 @@ def test_client() :
 
     with flask_app.test_client() as test_client:
         yield test_client 
-

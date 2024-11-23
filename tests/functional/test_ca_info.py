@@ -17,7 +17,7 @@ def test_ca_info_access(test_client) :
 
 def test_ca_info_requirements_link(test_client) :
     """
-    GIVEN a Flask application has beeon configured for testing and has
+    GIVEN a Flask application has been configured for testing and has
           a viewable landing page
     WHEN the requirements link is hit (/requirements is requested (GET))
     THEN check the response is valid
@@ -32,7 +32,7 @@ def test_ca_info_requirements_link(test_client) :
 
 def test_ca_info_home_link(test_client) :
     """
-    GIVEN a Flask application has beeon configured for testing and has
+    GIVEN a Flask application has been configured for testing and has
           a viewable landing page
     WHEN the home button is hit (/ is requested (GET))
     THEN check the response is valid
@@ -43,5 +43,3 @@ def test_ca_info_home_link(test_client) :
 
     assert response.status_code == 200
     assert b'campus? Would you like' in response.data
-
-
