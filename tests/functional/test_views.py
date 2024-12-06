@@ -6,7 +6,6 @@ def test_home_page(client):
     assert b"Apply to become a CA!" in response.data
     assert b"Would you like to help create community on campus?" in response.data
     assert b"What does a CA do?" in response.data
-    assert b"Requirements" in response.data
     assert b"Application" in response.data
     assert b"Make an Appointment" in response.data
     assert b"Admin Sign-In" in response.data

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app as app
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify,current_app as app
 # from models import db, Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -8,7 +8,7 @@ import logging
 from flask_login import login_required
 from sqlalchemy import or_, and_
 from website import db
-from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation
+from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation, AssessmentForm
 from .email_sender import send_application_confirmation_email, send_interview_confirmation_email
 
 # Create a blueprint for routes
@@ -41,6 +41,83 @@ def appointment():
 @main_blueprint.route("/ca_info")
 def ca_info():
     return render_template("ca_info.html")
+
+@main_blueprint.route("/assessment_form/<string:student_id>")
+def assessment_form(student_id):
+    applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
+    assessment = AssessmentForm.query.filter_by(student_id=student_id).first()
+    return render_template(
+        "normal_assessment.html",
+        applicant=applicant,
+        assessment=assessment
+    )
+
+
+@main_blueprint.route("/submit_assessment/<string:student_id>", methods=["POST"])
+def submit_assessment(student_id):
+    assessment = AssessmentForm.query.filter_by(student_id=student_id).first()
+
+    if assessment:
+        assessment.evaluator_name = request.form.get('evaluator_name')
+        assessment.q1_response = request.form.get('q1_response')
+        assessment.q1_evaluation = int(request.form.get('q1_evaluation'))
+        assessment.q2_response = request.form.get('q2_response')
+        assessment.q2_evaluation = int(request.form.get('q2_evaluation'))
+        assessment.q3_response = request.form.get('q3_response')
+        assessment.q3_evaluation = int(request.form.get('q3_evaluation'))
+        assessment.q4_response = request.form.get('q4_response')
+        assessment.q4_followup = request.form.get('q4_followup')
+        assessment.q4_evaluation = int(request.form.get('q4_evaluation'))
+        assessment.q5_response = request.form.get('q5_response')
+        assessment.q5_followup = request.form.get('q5_followup')
+        assessment.q5_evaluation = int(request.form.get('q5_evaluation'))
+        assessment.q6_response = request.form.get('q6_response')
+        assessment.q6_followup = request.form.get('q6_followup')
+        assessment.q6_evaluation = int(request.form.get('q6_evaluation'))
+        assessment.study_abroad_plans = request.form.get('study_abroad_plans')
+        assessment.can_attend_training = request.form.get('can_attend_training') == 'Yes'
+        assessment.candidate_questions = request.form.get('candidate_questions')
+        assessment.perceived_strengths = request.form.get('perceived_strengths')
+        assessment.perceived_growth_areas = request.form.get('perceived_growth_areas')
+        assessment.general_comments = request.form.get('general_comments')
+        assessment.hiring_recommendation = request.form.get('hiring_recommendation')
+        assessment.recommendation_rationale = request.form.get('recommendation_rationale')
+    else:
+        assessment = AssessmentForm(
+            student_id=student_id,
+            evaluator_name=request.form.get('evaluator_name'),
+            q1_response=request.form.get('q1_response'),
+            q1_evaluation=int(request.form.get('q1_evaluation')),
+            q2_response=request.form.get('q2_response'),
+            q2_evaluation=int(request.form.get('q2_evaluation')),
+            q3_response=request.form.get('q3_response'),
+            q3_evaluation=int(request.form.get('q3_evaluation')),
+            q4_response=request.form.get('q4_response'),
+            q4_followup=request.form.get('q4_followup'),
+            q4_evaluation=int(request.form.get('q4_evaluation')),
+            q5_response=request.form.get('q5_response'),
+            q5_followup=request.form.get('q5_followup'),
+            q5_evaluation=int(request.form.get('q5_evaluation')),
+            q6_response=request.form.get('q6_response'),
+            q6_followup=request.form.get('q6_followup'),
+            q6_evaluation=int(request.form.get('q6_evaluation')),
+            study_abroad_plans=request.form.get('study_abroad_plans'),
+            can_attend_training=request.form.get('can_attend_training') == 'Yes',
+            candidate_questions=request.form.get('candidate_questions'),
+            perceived_strengths=request.form.get('perceived_strengths'),
+            perceived_growth_areas=request.form.get('perceived_growth_areas'),
+            general_comments=request.form.get('general_comments'),
+            hiring_recommendation=request.form.get('hiring_recommendation'),
+            recommendation_rationale=request.form.get('recommendation_rationale')
+        )
+        db.session.add(assessment)
+
+    try:
+        db.session.commit()
+        return redirect(url_for('main.admin_home'))
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400 
 
 
 @main_blueprint.route('/application', methods=['GET', 'POST'])
@@ -166,13 +243,10 @@ def admin_home():
         })
     return render_template("admin_homepage.html", applicants=applicants_data, search_query=search_query)
 
-
 @main_blueprint.route("/assessment/<string:student_id>")
 def assessment(student_id):
-    applicant = ApplicantInformation.query.filter_by(
-        student_id=student_id).first_or_404()
-    return render_template("assessment.html", applicant=applicant)
-
+    applicant = ApplicantInformation.query.filter_by(student_id=student_id).first_or_404()
+    return render_template("normal_assessment.html", applicant=applicant)
 
 @main_blueprint.route("/apptSubmit", methods=['POST'])
 def appt_submit():
