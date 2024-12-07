@@ -39,7 +39,7 @@ class ApplicantInformation(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
     preferred_name = db.Column(db.String(100), nullable=True)
-    pronouns = db.Column(db.String(50), nullable=False)
+    pronouns = db.Column(db.String(50), nullable=False, default='N/A')
     student_id = db.Column(db.String(50), unique=True, nullable=False)
     current_hall = db.Column(db.String(100), nullable=False)
     current_room_number = db.Column(db.String(20), nullable=False)
@@ -55,14 +55,12 @@ class ApplicantInformation(db.Model):
     leadership_experience = db.Column(db.PickleType, nullable=False)
     application_status = db.Column(db.String(50), default='Submitted', nullable=False)
     assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
-    pronouns = db.Column(db.String(50), nullable=False, default='N/A')
-    application_status = db.Column(db.String(50), default='Submitted', nullable=False)
-    assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
-
+    
     # Relationships
     preferences = db.relationship('ApplicantPreferences', backref='applicant', uselist=False)
     additional_info = db.relationship('AdditionalInformation', backref='applicant', uselist=False)
     appointment = db.relationship('Appointment', back_populates='applicant', uselist=False)
+    assessment_form = db.relationship('AssessmentForm', back_populates='applicant', uselist=False)
 
     def get_interview_status(self):
         if self.appointment:
@@ -90,3 +88,41 @@ class AdditionalInformation(db.Model):
     why_ca = db.Column(db.String(1000), nullable=False)
     additional_comments = db.Column(db.String(1000), nullable=True)
     student_id = db.Column(db.String(50), db.ForeignKey('applicant_information.student_id'), nullable=False)
+
+class AssessmentForm(db.Model):
+    __tablename__ = 'assessment_form'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.String(6), db.ForeignKey('applicant_information.student_id'), nullable=False)
+    evaluator_name = db.Column(db.String(100), nullable=False) 
+    
+    q1_response = db.Column(db.Text, nullable=False)  
+    q1_evaluation = db.Column(db.Integer, nullable=False)
+    q2_response = db.Column(db.Text, nullable=False)
+    q2_evaluation = db.Column(db.Integer, nullable=False)
+    q3_response = db.Column(db.Text, nullable=False)
+    q3_evaluation = db.Column(db.Integer, nullable=False)
+    q4_response = db.Column(db.Text, nullable=False)
+    q4_followup = db.Column(db.String(500))  
+    q4_evaluation = db.Column(db.Integer, nullable=False)
+    q5_response = db.Column(db.Text, nullable=False)
+    q5_followup = db.Column(db.String(500)) 
+    q5_evaluation = db.Column(db.Integer, nullable=False)
+    q6_response = db.Column(db.Text, nullable=False)
+    q6_followup = db.Column(db.String(500))  
+    q6_evaluation = db.Column(db.Integer, nullable=False)
+    
+    # Logistical Questions
+    study_abroad_plans = db.Column(db.String(100))  
+    can_attend_training = db.Column(db.Boolean, nullable=False)
+    candidate_questions = db.Column(db.Text) 
+    
+    # Evaluator's Comments
+    perceived_strengths = db.Column(db.Text, nullable=False) 
+    perceived_growth_areas = db.Column(db.Text, nullable=False)
+    general_comments = db.Column(db.String(1000)) 
+    hiring_recommendation = db.Column(db.String(50), nullable=False) 
+    recommendation_rationale = db.Column(db.String(1000)) 
+    
+    # Relationship
+    applicant = db.relationship('ApplicantInformation', back_populates='assessment_form')

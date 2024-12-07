@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Advisor Assessment Form</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .bg-purple {
+        background-color: #673ab7;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container my-5">
+      <div class="card mb-4">
+        <div class="card-header bg-purple">
+          <h1 class="display-6 mb-0">
+            New Community Advisor Position Interview Form
+          </h1>
+        </div>
+        <div class="card-body">
+          <h2>Evaluation Criteria</h2>
+          <div class="mb-3">
+            <p>
+              <strong>5</strong> – Demonstrates a high level of reflection on
+              experiences; translates examples and experiences to the position
+              extremely well; describes mastery of skills and understanding;
+              requires minimal to no training.
+            </p>
+            <p>
+              <strong>4</strong> – Can reflect well on experiences; translates
+              examples and experiences well to the position; describes a strong
+              level of skills and understanding; requires little training.
+            </p>
+            <p>
+              <strong>3</strong> – Able to reflect on experiences; translates
+              examples and experiences to the position at basic levels;
+              describes basic level of skills and understanding; requires some
+              training/guidance.
+            </p>
+            <p>
+              <strong>2</strong> – Limited reflection on experiences; difficulty
+              translating examples and experiences to the position; describes
+              limited knowledge of skills and understanding; requires more
+              training than average candidates.
+            </p>
+            <p>
+              <strong>1</strong> – Little to no reflection on experiences;
+              examples and experiences not translated to the position;
+              difficulty describing skills and understanding; requires extensive
+              training.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <form method="POST" action="{{ url_for('main.submit_assessment', student_id=applicant.student_id)}}">
+        <div class="mb-4">
+          <label class="form-label">
+            Evaluator Name <span class="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            name="evaluator_name"
+            value="{{ assessment.evaluator_name if assessment else '' }}"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">
+            Student ID <span class="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            name="student_id"
+            value="{{ applicant.student_id}}"
+            readonly
+            required
+          />
+        </div>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q1: What interests you in the Community Advisor role and why did
+              you decide to apply for the position?
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q1_response"
+              required
+            >
+{{ assessment.q1_response if assessment else '' }}</textarea
+            >
+            <div class="mt-3">
+              <p class="text-muted mb-2">
+                Q1 Evaluation - Introductory and Position Interest
+              </p>
+              <div class="btn-group" role="group">
+                {% for score in range(5, 0, -1) %} <input type="radio"
+                class="btn-check" name="q1_evaluation" id="q1-{{ score }}"
+                value="{{ score }}" {% if assessment and
+                assessment.q1_evaluation == score %}checked{% endif %} required
+                />
+                <label class="btn btn-outline-primary" for="q1-{{ score }}"
+                  >{{ score }}</label
+                >
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q2: On a scale of 1-10, how confident are you in fulfilling the
+              responsibilities of a Community Advisor? Explain your rationale.
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q2_response"
+              required
+            >
+{{ assessment.q2_response if assessment else '' }}</textarea
+            >
+            <p class="text-muted">
+              Evaluate the candidate's awareness and confidence:
+            </p>
+            <div class="btn-group" role="group">
+              {% for score in range(5, 0, -1) %} <input type="radio"
+              class="btn-check" name="q2_evaluation" id="q2-{{ score }}"
+              value="{{ score }}" {% if assessment and assessment.q2_evaluation
+              == score %}checked{% endif %} required />
+              <label class="btn btn-outline-primary" for="q2-{{ score }}"
+                >{{ score }}</label
+              >
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q3: Reflect on life in the residential community. Provide concrete
+              ideas to cultivate stronger connections among residents.
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q3_response"
+              required
+            >
+{{ assessment.q3_response if assessment else '' }}</textarea
+            >
+            <p class="text-muted">
+              Evaluate the candidate's community-building skills:
+            </p>
+            <div class="btn-group" role="group">
+              {% for score in range(5, 0, -1) %} <input type="radio"
+              class="btn-check" name="q3_evaluation" id="q3-{{ score }}"
+              value="{{ score }}" {% if assessment and assessment.q3_evaluation
+              == score %}checked{% endif %} required />
+              <label class="btn btn-outline-primary" for="q3-{{ score }}"
+                >{{ score }}</label
+              >
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q4: Provide an example of when you cultivated an inclusive
+              community.
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q4_response"
+              required
+            >
+{{ assessment.q4_response if assessment else '' }}</textarea
+            >
+            <label for="q4_followup" class="form-label"
+              >Follow-Up: What made your actions inclusive?</label
+            >
+            <textarea class="form-control mb-3" rows="3" name="q4_followup">
+{{ assessment.q4_followup if assessment else '' }}</textarea
+            >
+            <p class="text-muted">
+              Evaluate the candidate's inclusivity and respect for others:
+            </p>
+            <div class="btn-group" role="group">
+              {% for score in range(5, 0, -1) %} <input type="radio"
+              class="btn-check" name="q4_evaluation" id="q4-{{ score }}"
+              value="{{ score }}" {% if assessment and assessment.q4_evaluation
+              == score %}checked{% endif %} required />
+              <label class="btn btn-outline-primary" for="q4-{{ score }}"
+                >{{ score }}</label
+              >
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q5: Share a challenging situation where you needed to speak up.
+              How might this inform your actions as a Community Advisor?
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q5_response"
+              required
+            >
+{{ assessment.q5_response if assessment else '' }}</textarea
+            >
+            <label for="q5_followup" class="form-label"
+              >Follow-Up: Describe what you learned.</label
+            >
+            <textarea class="form-control mb-3" rows="3" name="q5_followup">
+{{ assessment.q5_followup if assessment else '' }}</textarea
+            >
+            <p class="text-muted">
+              Evaluate the candidate's conflict resolution skills:
+            </p>
+            <div class="btn-group" role="group">
+              {% for score in range(5, 0, -1) %} <input type="radio"
+              class="btn-check" name="q5_evaluation" id="q5-{{ score }}"
+              value="{{ score }}" {% if assessment and assessment.q5_evaluation
+              == score %}checked{% endif %} required />
+              <label class="btn btn-outline-primary" for="q5-{{ score }}"
+                >{{ score }}</label
+              >
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              Q6: Describe a time when you had multiple demands placed on you at
+              once. What strategies helped you handle the situation?
+              <span class="text-danger">*</span>
+            </h5>
+            <textarea
+              class="form-control mb-3"
+              rows="4"
+              name="q6_response"
+              required
+            >
+{{ assessment.q6_response if assessment else '' }}</textarea
+            >
+            <label for="q6_followup" class="form-label"
+              >Follow-Up: How do you prioritize tasks?</label
+            >
+            <textarea class="form-control mb-3" rows="3" name="q6_followup">
+{{ assessment.q6_followup if assessment else '' }}</textarea
+            >
+            <p class="text-muted">
+              Evaluate the candidate's time management and prioritization:
+            </p>
+            <div class="btn-group" role="group">
+              {% for score in range(5, 0, -1) %} <input type="radio"
+              class="btn-check" name="q6_evaluation" id="q6-{{ score }}"
+              value="{{ score }}" {% if assessment and assessment.q6_evaluation
+              == score %}checked{% endif %} required />
+              <label class="btn btn-outline-primary" for="q6-{{ score }}"
+                >{{ score }}</label
+              >
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-purple">
+            <h5 class="mb-0">Logistical Questions</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <label class="form-label">Study Abroad Plans</label>
+              <input
+                type="text"
+                class="form-control"
+                name="study_abroad_plans"
+                value="{{ assessment.study_abroad_plans if assessment else '' }}"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Fall Training Availability</label>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="can_attend_training"
+                  id="training-yes"
+                  value="Yes"
+                  {%
+                  if
+                  assessment
+                  and
+                  assessment.can_attend_training
+                  %}checked{%
+                  endif
+                  %}
+                />
+                <label class="form-check-label" for="training-yes">Yes</label>
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="can_attend_training"
+                  id="training-no"
+                  value="No"
+                  {%
+                  if
+                  assessment
+                  and
+                  not
+                  assessment.can_attend_training
+                  %}checked{%
+                  endif
+                  %}
+                />
+                <label class="form-check-label" for="training-no">No</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Candidate Questions</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                name="candidate_questions"
+              >
+{{ assessment.candidate_questions if assessment else '' }}</textarea
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-purple">
+            <h5 class="mb-0">Evaluator's Comments and Recommendation</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <label class="form-label">Perceived Strengths</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                name="perceived_strengths"
+                required
+              >
+{{ assessment.perceived_strengths if assessment else '' }}</textarea
+              >
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Perceived Areas for Growth</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                name="perceived_growth_areas"
+                required
+              >
+{{ assessment.perceived_growth_areas if assessment else '' }}</textarea
+              >
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">General Comments</label>
+              <textarea class="form-control" rows="3" name="general_comments">
+{{ assessment.general_comments if assessment else '' }}</textarea
+              >
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Hiring Recommendation</label>
+              <div class="form-check">
+                <input type="radio" class="form-check-input"
+                name="hiring_recommendation" id="recommend-strongly"
+                value="Strongly Recommend" {% if assessment and
+                assessment.hiring_recommendation == 'Strongly Recommend'
+                %}checked{% endif %} required />
+                <label class="form-check-label" for="recommend-strongly"
+                  >Strongly Recommend</label
+                >
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input"
+                name="hiring_recommendation" id="recommend" value="Recommend" {%
+                if assessment and assessment.hiring_recommendation ==
+                'Recommend' %}checked{% endif %} />
+                <label class="form-check-label" for="recommend"
+                  >Recommend</label
+                >
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input"
+                name="hiring_recommendation" id="recommend-reservations"
+                value="Recommend w/ Reservations" {% if assessment and
+                assessment.hiring_recommendation == 'Recommend w/ Reservations'
+                %}checked{% endif %} />
+                <label class="form-check-label" for="recommend-reservations"
+                  >Recommend w/ Reservations</label
+                >
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input"
+                name="hiring_recommendation" id="recommend-not" value="Do Not
+                Recommend" {% if assessment and assessment.hiring_recommendation
+                == 'Do Not Recommend' %}checked{% endif %} />
+                <label class="form-check-label" for="recommend-not"
+                  >Do Not Recommend</label
+                >
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Recommendation Rationale</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                name="recommendation_rationale"
+              >
+{{ assessment.recommendation_rationale if assessment else '' }}</textarea
+              >
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Submit Evaluation
+        </button>
+      </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
