@@ -232,7 +232,7 @@
 
                 <div class="col-md-6">
                     <label for="cur_room_num" class="form-label">Current Room Assignment (Room Number): </label>
-                    <input type="number" id="cur_room_num" name="cur_room_num" min="000" max="999" class="form-control"> <br>
+                    <input type="text" id="cur_room_num" name="cur_room_num" class="form-control" pattern="^[0-9]{1,3}[A-Za-z]?$" title="Please enter a valid room number (e.g., 100, 100A)"> <br>
                     
                 </div>
 
