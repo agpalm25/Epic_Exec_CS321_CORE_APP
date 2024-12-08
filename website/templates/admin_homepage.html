@@ -368,11 +368,11 @@
             <h1>Hello, <span id="username">Admin</span>!</h1>
         </div>
         
-        <!-- <div class="button-section text-center mb-4">
+        <div class="button-section text-center mb-4">
             <a href="{{url_for('main.view_all_applicants')}}" class="btn btn-primary btn-lg">
                 View All Applicants
             </a>
-        </div> -->
+        </div> 
         
         <div class="search-section mb-4 text-center">
             <form action="{{ url_for('main.admin_home') }}" method="GET">
@@ -427,9 +427,13 @@
         function confirmLogout() {
             const isConfirmed = confirm("Are you sure you want to logout?");
             if (isConfirmed) {
-                window.location.href = "{{ url_for('auth.logout') }}";
+                window.location.href = "{{ url_for('auth.logout') }}"; 
+                setTimeout(function() {
+                    window.location.href = "{{ url_for('auth.signin') }}"; 
+                }, 200); 
             }
         }
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
