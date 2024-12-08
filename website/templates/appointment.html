@@ -157,6 +157,14 @@
         <h1 class="display-1">Schedule an Interview Appointment</h1>
 
         <div class="container">
+            <!-- Flash messages section -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
         <div class="apptTransparentBackground">
             <form action="/apptSubmit" method="post" class="apptForm">
@@ -187,10 +195,6 @@
 
     <script>
         document.querySelector('.apptForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('apptWait').style.display = 'none';
-            document.getElementById('apptThanks').style.display = 'block';
-            this.submit();
         });
     </script>
 </body>
