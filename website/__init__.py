@@ -22,7 +22,6 @@ def create_app():
     """
     app = Flask(__name__)
 
-    # Configure logging
     app.logger.setLevel(logging.INFO)
 
     # Load configuration
@@ -44,19 +43,15 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
 
-    # Flask-Login: Define user loader
     @login_manager.user_loader
     def load_user(user_id):
         return Admin.query.get(int(user_id))
 
-    # Create database tables with improved error handling
     with app.app_context():
         try:
             db.create_all()
             app.logger.info("Database tables created successfully or already exist")
         except Exception as e:
             app.logger.warning(f"Note during database initialization: {str(e)}")
-            # Don't raise the exception - tables may already exist
             pass
-
     return app
