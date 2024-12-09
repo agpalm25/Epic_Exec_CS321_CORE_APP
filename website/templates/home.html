@@ -7,7 +7,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-
         .navbar{
             position: fixed;
             top: 0;
@@ -52,55 +51,93 @@
             background: rgba(0, 0, 0, 0.4);
             z-index: 1; }
 
+        .bottom-link {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            text-align: right;
+            margin-top: 50px;
+            padding: 10px 10px;
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+            z-index: 3;
+        }
+
+        .bottom-link a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 10;
+            position: relative; 
+        }
+
+        .bottom-link a:hover {
+            color: rgb(255, 255, 255);
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand bg-light">
-
         <ul class="navbar-nav ml-auto">
-
             <li class="nav-item">
                 <a class="nav-link" href="ca_info">What does a CA do?</a></li>
-
             <li class="nav-item">
                 <a class="nav-link" href="requirements">Application</a></li>
-
             <li class="nav-item">
                 <a class="nav-link" href="appointment">Make an Appointment</a></li>
-
             <li class="nav-item">
                 <a class="nav-link" href="signin">Admin Sign-In</a></li>
-
         </ul>
     </nav>
 
-    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">        <div class="carousel-caption">
-
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">        
+        <div class="carousel-caption">
             <h1 class="display-1"><strong>Apply to become a CA!</strong></h1>
             <blockquote class="blockquote"><p>Would you like to help create community on campus? Would you like to make connections with other students and get paid for it? Apply for a CA position!</p></blockquote>
-
         </div>
 
         <div class="carousel-inner">
-
             <div class="carousel-item active">
                 <img src="{{ url_for('static', filename='images/mariner.jpg') }}" class="d-block w-100" alt="Mariner Residence">
             </div>
-
             <div class="carousel-item">
                 <img src="{{ url_for('static', filename='images/averill.jpg') }}" class="d-block w-100" alt="Averill Residence">
             </div>
-
             <div class="carousel-item">
                 <img src="{{ url_for('static', filename='images/drummond.jpg') }}" class="d-block w-100" alt="Drummond Residence">
             </div>
-
             <div class="carousel-item">
                 <img src="{{ url_for('static', filename='images/west_quad.jpg') }}" class="d-block w-100" alt="West-Quad Residence">
             </div>
+        </div>
+    </div>
 
+    <div class="bottom-link">
+        <a href="#" data-toggle="modal" data-target="#photoCreditsModal">Photo Credits</a>
+    </div>
+
+    <!-- Photo Credits Modal -->
+    <div class="modal fade" id="photoCreditsModal" tabindex="-1" role="dialog" aria-labelledby="photoCreditsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoCreditsModalLabel">Photo Credits</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li><a href="https://commons.wikimedia.org/wiki/File:Marriner_Hall,_Colby_College.jpg" target="_blank">Mariner Hall</a></li>
+                        <li><a href="https://commons.wikimedia.org/wiki/File:Averill_Hall_Colby_College.jpg" target="_blank">Averill Hall</a></li>
+                        <li><a href="https://commons.wikimedia.org/wiki/File:Colby_College_Drummond_Hall.JPG" target="_blank">Drummond Hall</a></li>
+                        <li><a href="https://commons.wikimedia.org/wiki/File:Colby_College_West_Quad.jpg" target="_blank">West Quad</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
