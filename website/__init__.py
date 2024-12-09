@@ -4,7 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 import pymysql
+import logging
+
+# Configure PyMySQL to work as MySQLdb
 pymysql.install_as_MySQLdb()
+
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -17,6 +21,8 @@ def create_app():
     Factory function to create and configure the Flask application.
     """
     app = Flask(__name__)
+
+    app.logger.setLevel(logging.INFO)
 
     # Load configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret_key')
@@ -37,13 +43,15 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
 
-    # Flask-Login: Define user loader
     @login_manager.user_loader
     def load_user(user_id):
         return Admin.query.get(int(user_id))
 
-    # Create database tables (if necessary)
     with app.app_context():
-        db.create_all()
-
+        try:
+            db.create_all()
+            app.logger.info("Database tables created successfully or already exist")
+        except Exception as e:
+            app.logger.warning(f"Note during database initialization: {str(e)}")
+            pass
     return app
