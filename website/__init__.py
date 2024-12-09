@@ -3,7 +3,8 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
-
+import pymysql
+pymysql.install_as_MySQLdb()
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -21,6 +22,7 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret_key')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('JAWSDB_URL', 'sqlite:///app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ECHO'] = True
 
     # Initialize extensions with the app
     db.init_app(app)
