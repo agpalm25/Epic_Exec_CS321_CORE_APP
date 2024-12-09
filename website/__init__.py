@@ -55,3 +55,4 @@ def create_app():
             app.logger.warning(f"Note during database initialization: {str(e)}")
             pass
     return app
+#
