@@ -8,8 +8,9 @@ import logging
 from flask_login import login_required
 from sqlalchemy import or_, and_
 from website import db
-from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation, AssessmentForm
+from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation, AssessmentForm, ApplicantResume
 from .email_sender import send_application_confirmation_email, send_interview_confirmation_email
+from utils import extract_text_from_pdf
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -166,6 +167,30 @@ def application():
                 additional_comments=request.form.get('add_info')
             )
 
+            # NEW: Handle file upload and extract data
+            uploaded_file = request.files.get('resume')  # Match with HTML input name
+            if uploaded_file and uploaded_file.filename != '':
+                extracted_data = extract_text_from_pdf(uploaded_file)
+
+                if extracted_data["name"]:
+                    name_parts = extracted_data["name"].split()
+                    if name_parts:
+                        applicant_info.first_name = name_parts[0]
+                        if len(name_parts) > 1:
+                            applicant_info.last_name = name_parts[-1]
+
+                if extracted_data["email"]:
+                    applicant_info.current_email = extracted_data["email"]
+
+                if extracted_data["phone_number"]:
+                    applicant_info.current_phone_number = extracted_data["phone_number"]
+
+                if extracted_data["education"]:
+                    applicant_info.education = extracted_data["education"]
+
+                if extracted_data["skills"]:
+                    applicant_info.skills = extracted_data["skills"]
+                
             db.session.add(applicant_info)
             db.session.add(applicant_preferences)
             db.session.add(additional_info)
