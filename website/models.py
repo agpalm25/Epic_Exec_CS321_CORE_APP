@@ -48,24 +48,13 @@ class ApplicantInformation(db.Model):
     current_phone_number = db.Column(db.String(20), nullable=False)
     returning_ca_or_new_ca = db.Column(db.String(20), nullable=False)
     major_1 = db.Column(db.String(100), nullable=False)
-
-
-    # edit to not show if not there
     major_2 = db.Column(db.String(100), nullable=True)
     minor_1 = db.Column(db.String(100), nullable=True)
     minor_2 = db.Column(db.String(100), nullable=True)
-
-
     class_year = db.Column(db.String(20), nullable=False)
     cumulative_gpa = db.Column(db.Float, nullable=False)
-
-
-    # edit 
     leadership_experience = db.Column(db.PickleType, nullable=False)
     application_status = db.Column(db.String(50), default='Submitted', nullable=False)
-
-
-    # fine content
     assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
     
     # Relationships

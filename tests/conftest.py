@@ -6,6 +6,7 @@ from website import create_app, db as _db
 
 
 @pytest.fixture(scope='session')
+# session - > shared accross ALL test files
 def app():
     """Create the Flask application."""
     app = create_app()
@@ -23,6 +24,7 @@ def db(app):
         _db.drop_all() 
 
 @pytest.fixture(scope='function')
+# function -> data isn't retained, made anew every time
 def client(app):
     """Provide a test client."""
     return app.test_client()
@@ -32,6 +34,7 @@ def session(app, db):
     """
     Provide a database session for a test function,
     rolling back changes after the test.
+    (ensures database changes are isolated to a test)
     """
     with app.app_context():
         connection = db.engine.connect()
@@ -51,6 +54,7 @@ def app_context(app):
         yield
 
 @pytest.fixture(scope='module')
+# module -> shared accross all tests in the same file
 def test_client() :
 
     os.environ['CONFIG_TYPE'] = 'config.TestingConfig'
