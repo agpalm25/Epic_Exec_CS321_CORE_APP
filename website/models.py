@@ -56,6 +56,8 @@ class ApplicantInformation(db.Model):
     leadership_experience = db.Column(db.PickleType, nullable=False)
     application_status = db.Column(db.String(50), default='Submitted', nullable=False)
     assessment_status = db.Column(db.String(50), default='Yet to Be Assessed', nullable=False)
+    education = db.Column(db.String(1000), nullable=True)
+    skills = db.Column(db.String(1000), nullable=True)
     
     # Relationships
     preferences = db.relationship('ApplicantPreferences', backref='applicant', uselist=False)
@@ -275,3 +277,16 @@ class AssessmentForm(db.Model):
     
     # Relationship
     applicant = db.relationship('ApplicantInformation', back_populates='assessment_form')
+
+class ApplicantResume(db.Model):
+    __tablename__ = 'applicant_resume'
+
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.String, db.ForeignKey('applicant_information.student_id'), nullable=False)
+    name = db.Column(db.String(255), nullable=True)
+    education = db.Column(db.Text, nullable=True)
+    experience = db.Column(db.Text, nullable=True)
+    skills = db.Column(db.Text, nullable=True) 
+    certifications = db.Column(db.Text, nullable=True)
+    summary = db.Column(db.Text, nullable=True)
+    applicant = db.relationship('ApplicantInformation', backref='resume', uselist=False)
