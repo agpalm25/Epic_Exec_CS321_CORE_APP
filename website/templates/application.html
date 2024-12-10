@@ -158,8 +158,7 @@
 
             <h1 class="text-center mb-4">Application Form</h1>
 
-            <form action="{{ url_for('main.application') }}" method="POST" class="applicForm"> 
-
+            <form action="{{ url_for('main.application') }}" method="POST" enctype="multipart/form-data" class="applicForm"> 
                 <div class="col-md-6">
                     <label for="first_name" class="form-label">FIRST Name: </label>
                     <input type="text" id="first_name" name="first_name" class="form-control" required> <br>
@@ -185,7 +184,7 @@
 
                 <div class="col-md-6">
                     <label for="student_id" class="form-label">Colby Student ID Number: </label>
-                    <input type="number" id="student_id" name="student_id" min="100000" max="999999" class="form-control"> <br>
+                    <input type="number" id="student_id" name="student_id" min="100000" max="999999" class="form-control" required> <br>
                     
                 </div>
 
@@ -459,6 +458,11 @@
                     <label for="signature" class="form-label"></label>
                     <input type="text" class="form-control" id="signature" name="signature" required> <br>
 
+                </div>
+
+                <div class="col-md-6">
+                    <label for="resume" class="form-label">Upload Resume:</label>
+                    <input type="file" id="resume" name="resume" class="form-control" accept=".pdf" required> <br>
                 </div>
 
                 <div class="col-md-6">

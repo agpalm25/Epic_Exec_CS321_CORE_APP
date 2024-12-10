@@ -1,10 +1,12 @@
 from flask import Flask
+from flask import jsonify
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 import pymysql
 import logging
+from werkzeug.exceptions import RequestEntityTooLarge
 
 # Configure PyMySQL to work as MySQLdb
 pymysql.install_as_MySQLdb()
@@ -29,6 +31,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('JAWSDB_URL', 'sqlite:///app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ECHO'] = True
+    app.config['MAX_CONTENT_LENGTH'] = 300 * 1024  # 300 KB limit
 
     # Initialize extensions with the app
     db.init_app(app)
@@ -46,9 +49,15 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return Admin.query.get(int(user_id))
+    
+    @app.errorhandler(RequestEntityTooLarge)
+    def handle_file_size_error(e):
+        return jsonify({"error": "File is too large. Maximum file size allowed is 300 KB."}), 413
+
 
     with app.app_context():
         try:
+            db.drop_all()
             db.create_all()
             app.logger.info("Database tables created successfully or already exist")
         except Exception as e:
