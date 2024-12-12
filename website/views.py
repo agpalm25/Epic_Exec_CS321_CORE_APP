@@ -9,7 +9,7 @@ from flask_login import login_required
 from sqlalchemy import or_, and_
 from website import db
 from .models import Appointment, ApplicantInformation, ApplicantPreferences, AdditionalInformation, AssessmentForm
-from .email_sender import send_application_confirmation_email, send_interview_confirmation_email
+from .email_sender import send_application_confirmation_email, send_interview_confirmation_email, send_assessment_result_email
 
 # Create a blueprint for routes
 main_blueprint = Blueprint('main', __name__)
@@ -342,7 +342,20 @@ def assess_applicant(student_id):
         assessment = request.form.get('assessment')
         applicant.assessment_status = assessment
         db.session.commit()
-        flash('Assessment updated successfully', 'success')
+
+        try:
+            send_assessment_result_email(
+                applicant.current_email,
+                applicant.preferred_name or applicant.first_name,
+                applicant.last_name,
+                applicant.student_id,
+                assessment
+            )
+            flash('Assessment updated successfully and email sent', 'success')
+        except Exception as e:
+            logger.error(f"Failed to send assessment result email: {str(e)}")
+            flash('Assessment updated successfully, but there was an issue sending the email', 'warning')
+
         return redirect(url_for('main.admin_home'))
 
     return render_template('assess_applicant.html', applicant=applicant)
